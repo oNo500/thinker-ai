@@ -66,7 +66,7 @@
   "scripts": {
     "build": "next build",
     "check-types": "tsc --noEmit --pretty",
-    "dev": "pnpm mock:server & next dev --turbopack --port 3000",
+    "dev": "next dev --turbopack --port 3000",
     "lint": "eslint",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "mock:server": "pnpx tsx --watch ./src/mocks/server.ts",
