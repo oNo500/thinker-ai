@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Palette, Bot, BookOpen, PenTool, FolderOpen, ArrowRight } from 'lucide-react';
 import { Button } from '@repo/ui/components/button';
 
+import { PDF_PRD_URL } from '@/lib/constant';
+
 const features = [
   {
     id: 'canvas',
@@ -128,7 +130,7 @@ const FeatureSection = () => {
                         <Button
                           className="group inline-flex items-center gap-2"
                           onClick={() => {
-                            window.open('https://pdf-git-onthesnow1s-projects.vercel.app/', '_self');
+                            window.open(PDF_PRD_URL, '_self');
                           }}
                         >
                           立即体验

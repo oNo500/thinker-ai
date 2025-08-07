@@ -5,6 +5,7 @@ import { ArrowRight, Play, Sparkles } from 'lucide-react';
 
 import { Typewriter } from '@/components/ui/typewriter';
 import { ParticlesBackground } from '@/components/ui/particles-background';
+import { PDF_PRD_URL } from '@/lib/constant';
 
 const Hero = () => {
   return (
@@ -47,7 +48,7 @@ const Hero = () => {
             {/* CTA Button */}
             <div className="mt-16">
               <Button
-                onClick={() => window.open('https://pdf-git-onthesnow1s-projects.vercel.app/', '_self')}
+                onClick={() => window.open(PDF_PRD_URL, '_self')}
                 size="lg"
                 className="group inline-flex items-center rounded-full bg-blue-600 !px-12 !py-6 text-2xl font-semibold text-white shadow-2xl transition-all hover:scale-105 hover:bg-blue-700"
               >
