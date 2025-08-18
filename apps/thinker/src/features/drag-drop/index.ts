@@ -15,6 +15,12 @@ export { Tab } from './components/desktop-ide/tab-system/tab';
 export { TabBar } from './components/desktop-ide/tab-system/tab-bar';
 export { TabContent } from './components/desktop-ide/tab-system/tab-content';
 
+// Dock 组件
+export { Dock } from './components/dock/dock';
+export { DockItem } from './components/dock/dock-item';
+export { WindowPreview } from './components/dock/window-preview';
+export { ContextMenu } from './components/dock/context-menu';
+
 // 状态管理
 export { useDesktopStore } from './stores/desktop-store';
 export {

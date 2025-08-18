@@ -12,7 +12,7 @@ import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 
 import { getFileIcon, canMoveItem } from '@/features/drag-drop/stores/file-system-data';
 
-import type { FileSystemItem, DragData, FileSystemInstruction } from '@/features/drag-drop/types';
+import type { FileSystemItem, DragData, FileSystemInstruction, FileDragData } from '@/features/drag-drop/types';
 
 interface FileTreeItemProps {
   item: FileSystemItem;
@@ -57,22 +57,40 @@ export function FileTreeItem({
     return combine(
       draggable({
         element,
-        getInitialData: (): DragData => ({
-          type: 'file-system-item',
-          itemId: item.id,
-          itemType: item.type,
-        }),
+        getInitialData: () => {
+          if (item.type === 'file') {
+            // 文件可以拖拽到桌面创建新窗口
+            return {
+              type: 'desktop-file',
+              fileId: item.id,
+              fileName: item.name,
+              content: item.content || '',
+            };
+          } else {
+            // 文件夹只能在文件系统内拖拽
+            return {
+              type: 'file-system-item',
+              itemId: item.id,
+              itemType: item.type,
+            };
+          }
+        },
         onDragStart: () => setIsDragging(true),
         onDrop: () => setIsDragging(false),
       }),
       dropTargetForElements({
         element,
         canDrop: ({ source }) => {
-          const sourceData = source.data as DragData;
+          const sourceData = source.data as DragData | FileDragData;
+          if (sourceData.type === 'desktop-file') {
+            // 桌面文件不能拖回文件树
+            return false;
+          }
           if (sourceData.type !== 'file-system-item') return false;
 
           // 检查是否可以移动
-          return canMoveItem(allItems, sourceData.itemId, item.id);
+          const dragData = sourceData as DragData;
+          return canMoveItem(allItems, dragData.itemId, item.id);
         },
         getData: ({ input, element }) => {
           const data = {
@@ -148,7 +166,7 @@ export function FileTreeItem({
         },
       }),
     );
-  }, [item.id, item.type, isFolder, allItems, onMove]);
+  }, [item.id, item.type, isFolder, allItems, onMove, item.content, item.name]);
 
   const paddingLeft = level * 20 + 8;
 

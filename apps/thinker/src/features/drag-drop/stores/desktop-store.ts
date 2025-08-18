@@ -1,7 +1,17 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import type { DesktopState, WindowState, WindowConfig, TabItem, DragContext, Position } from '../types';
+import type {
+  DesktopState,
+  WindowState,
+  WindowConfig,
+  TabItem,
+  DragContext,
+  Position,
+  DockConfig,
+  DockItemData,
+  DockState,
+} from '../types';
 
 interface DesktopStore extends DesktopState {
   // 窗口操作
@@ -24,6 +34,13 @@ interface DesktopStore extends DesktopState {
   // 拖拽状态
   setDragContext: (context: DragContext | null) => void;
 
+  // Dock 操作
+  updateDockConfig: (config: Partial<DockConfig>) => void;
+  toggleDockPosition: () => void;
+  toggleDockVisibility: () => void;
+  updateDockItems: () => void;
+  getDockItem: (windowId: string) => DockItemData | undefined;
+
   // 工具方法
   getNextZIndex: () => number;
   getWindow: (windowId: string) => WindowState | undefined;
@@ -40,6 +57,14 @@ const defaultWindowConfig: Partial<WindowConfig> = {
   hasFileTree: false,
 };
 
+// 默认 Dock 配置
+const defaultDockConfig: DockConfig = {
+  position: 'bottom',
+  autoHide: false,
+  size: 'medium',
+  showLabels: false,
+};
+
 export const useDesktopStore = create<DesktopStore>()(
   devtools(
     (set, get) => ({
@@ -48,6 +73,11 @@ export const useDesktopStore = create<DesktopStore>()(
       activeWindowId: null,
       nextZIndex: 1000,
       dragContext: null,
+      dock: {
+        isVisible: true,
+        config: defaultDockConfig,
+        items: [],
+      },
 
       // 窗口操作
       createWindow: (config: WindowConfig) => {
@@ -75,6 +105,9 @@ export const useDesktopStore = create<DesktopStore>()(
           nextZIndex: nextZIndex + 1,
         }));
 
+        // 更新 Dock 项目
+        get().updateDockItems();
+
         return id;
       },
 
@@ -93,6 +126,9 @@ export const useDesktopStore = create<DesktopStore>()(
                 : state.activeWindowId,
           };
         });
+
+        // 更新 Dock 项目
+        get().updateDockItems();
       },
 
       focusWindow: (windowId: string) => {
@@ -110,6 +146,9 @@ export const useDesktopStore = create<DesktopStore>()(
           activeWindowId: windowId,
           nextZIndex: state.nextZIndex + 1,
         }));
+
+        // 更新 Dock 项目
+        get().updateDockItems();
       },
 
       updateWindow: (windowId: string, updates: Partial<WindowState>) => {
@@ -184,6 +223,9 @@ export const useDesktopStore = create<DesktopStore>()(
             },
           };
         });
+
+        // 更新 Dock 项目
+        get().updateDockItems();
       },
 
       // Tab操作
@@ -345,6 +387,64 @@ export const useDesktopStore = create<DesktopStore>()(
       // 拖拽状态
       setDragContext: (context: DragContext | null) => {
         set({ dragContext: context });
+      },
+
+      // Dock 操作
+      updateDockConfig: (config: Partial<DockConfig>) => {
+        set((state) => ({
+          dock: {
+            ...state.dock,
+            config: { ...state.dock.config, ...config },
+          },
+        }));
+      },
+
+      toggleDockPosition: () => {
+        set((state) => ({
+          dock: {
+            ...state.dock,
+            config: {
+              ...state.dock.config,
+              position: state.dock.config.position === 'bottom' ? 'left' : 'bottom',
+            },
+          },
+        }));
+      },
+
+      toggleDockVisibility: () => {
+        set((state) => ({
+          dock: {
+            ...state.dock,
+            isVisible: !state.dock.isVisible,
+          },
+        }));
+      },
+
+      updateDockItems: () => {
+        const { windows, activeWindowId } = get();
+        const dockItems: DockItemData[] = Object.values(windows).map((window, index) => ({
+          id: window.id,
+          windowId: window.id,
+          title: window.title,
+          icon: window.hasFileTree ? '📁' : '📄',
+          isActive: activeWindowId === window.id && !window.isMinimized,
+          isMinimized: window.isMinimized,
+          hasMultipleTabs: window.tabs.length > 1,
+          tabCount: window.tabs.length,
+          order: index,
+        }));
+
+        set((state) => ({
+          dock: {
+            ...state.dock,
+            items: dockItems,
+          },
+        }));
+      },
+
+      getDockItem: (windowId: string) => {
+        const { dock } = get();
+        return dock.items.find((item) => item.windowId === windowId);
       },
 
       // 工具方法

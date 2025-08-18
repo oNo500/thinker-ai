@@ -272,12 +272,16 @@ export function EnhancedFileTree({ windowId }: EnhancedFileTreeProps) {
     return monitorForElements({
       canMonitor: ({ source }) => {
         const data = source.data as DragData;
-        return data.type === 'file-system-item';
+        return data.type === 'file-system-item' || data.type === 'desktop-file';
       },
       onDrop: ({ source, location }) => {
         if (location.current.dropTargets.length === 0) {
           const sourceData = source.data as DragData;
-          console.log('Dropped to empty area:', sourceData.itemId);
+          if (sourceData.type === 'file-system-item') {
+            console.log('Dropped to empty area:', sourceData.itemId);
+          } else if (sourceData.type === 'desktop-file') {
+            console.log('File dropped to desktop:', sourceData.fileName);
+          }
         }
       },
     });

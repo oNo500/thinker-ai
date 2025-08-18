@@ -59,6 +59,7 @@ export interface DesktopState {
   activeWindowId: string | null;
   nextZIndex: number;
   dragContext: DragContext | null;
+  dock: DockState;
 }
 
 // 拖拽数据类型
@@ -74,4 +75,33 @@ export interface FileDragData {
   fileId: string;
   fileName: string;
   content: string;
+}
+
+// Dock 相关类型定义
+export type DockPosition = 'bottom' | 'left';
+export type DockSize = 'small' | 'medium' | 'large';
+
+export interface DockConfig {
+  position: DockPosition;
+  autoHide: boolean;
+  size: DockSize;
+  showLabels: boolean;
+}
+
+export interface DockItemData {
+  id: string;
+  windowId: string;
+  title: string;
+  icon: string;
+  isActive: boolean;
+  isMinimized: boolean;
+  hasMultipleTabs: boolean;
+  tabCount: number;
+  order: number;
+}
+
+export interface DockState {
+  isVisible: boolean;
+  config: DockConfig;
+  items: DockItemData[];
 }

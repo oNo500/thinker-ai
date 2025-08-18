@@ -10,7 +10,6 @@ import {
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { DropIndicator } from '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator/list-item';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
-import { Button } from '@repo/ui/components/button';
 
 import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
@@ -53,7 +52,7 @@ export function Tab({ tab, windowId, index }: TabProps) {
     }
   };
 
-  const handleClose = (e: React.MouseEvent) => {
+  const handleClose = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
     removeTab(windowId, tab.id);
   };
@@ -108,7 +107,7 @@ export function Tab({ tab, windowId, index }: TabProps) {
         },
       }),
     );
-  }, [tab.id, windowId, index]);
+  }, [tab, windowId, index]);
 
   return (
     <button
@@ -138,14 +137,22 @@ export function Tab({ tab, windowId, index }: TabProps) {
       </div>
 
       {/* 关闭按钮 */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="h-4 w-4 flex-shrink-0 p-0 hover:bg-gray-200 dark:hover:bg-gray-600"
+      <div
+        className="flex h-4 w-4 flex-shrink-0 cursor-pointer items-center justify-center rounded hover:bg-gray-200 dark:hover:bg-gray-600"
         onClick={handleClose}
+        role="button"
+        tabIndex={-1}
+        aria-label="关闭标签"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            handleClose(e);
+          }
+        }}
       >
         <X className="h-3 w-3" />
-      </Button>
+      </div>
 
       {/* 拖拽指示器 */}
       {instruction && <DropIndicator instruction={instruction} />}

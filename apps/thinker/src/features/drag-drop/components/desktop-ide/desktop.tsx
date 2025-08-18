@@ -6,6 +6,7 @@ import { dropTargetForElements, monitorForElements } from '@atlaskit/pragmatic-d
 import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
 import { Window } from './window';
+import { Dock } from '../dock/dock';
 
 import type { FileDragData, TabDragData } from '@/features/drag-drop/types';
 
@@ -92,9 +93,7 @@ export function Desktop({ children }: DesktopProps) {
       ref={desktopRef}
       className="fixed inset-0 overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800"
       style={{
-        backgroundImage: `
-          radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
-        `,
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)',
         backgroundSize: '20px 20px',
       }}
     >
@@ -120,6 +119,9 @@ export function Desktop({ children }: DesktopProps) {
           </div>
         </div>
       )}
+
+      {/* Dock 组件 */}
+      <Dock position="bottom" autoHide={false} size="medium" showLabels={false} />
     </div>
   );
 }
