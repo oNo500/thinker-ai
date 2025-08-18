@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-app",
+  "name": "land-page",
   "version": "0.1.0",
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
