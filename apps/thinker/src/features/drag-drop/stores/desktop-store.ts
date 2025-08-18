@@ -113,35 +113,50 @@ export const useDesktopStore = create<DesktopStore>()(
       },
 
       updateWindow: (windowId: string, updates: Partial<WindowState>) => {
-        set((state) => ({
-          windows: {
-            ...state.windows,
-            [windowId]: { ...state.windows[windowId], ...updates },
-          },
-        }));
+        set((state) => {
+          const window = state.windows[windowId];
+          if (!window) return state; // 如果窗口不存在，直接返回原状态
+
+          return {
+            windows: {
+              ...state.windows,
+              [windowId]: { ...window, ...updates },
+            },
+          };
+        });
       },
 
       moveWindow: (windowId: string, position: Position) => {
-        set((state) => ({
-          windows: {
-            ...state.windows,
-            [windowId]: { ...state.windows[windowId], position },
-          },
-        }));
+        set((state) => {
+          const window = state.windows[windowId];
+          if (!window) return state;
+
+          return {
+            windows: {
+              ...state.windows,
+              [windowId]: { ...window, position },
+            },
+          };
+        });
       },
 
       resizeWindow: (windowId: string, size: { width: number; height: number }) => {
-        set((state) => ({
-          windows: {
-            ...state.windows,
-            [windowId]: { ...state.windows[windowId], size },
-          },
-        }));
+        set((state) => {
+          const window = state.windows[windowId];
+          if (!window) return state;
+
+          return {
+            windows: {
+              ...state.windows,
+              [windowId]: { ...window, size },
+            },
+          };
+        });
       },
 
       toggleMaximizeWindow: (windowId: string) => {
         set((state) => {
-          const window = state.windows[windowId];
+          const window = state.windows[windowId]!;
           return {
             windows: {
               ...state.windows,
@@ -155,15 +170,20 @@ export const useDesktopStore = create<DesktopStore>()(
       },
 
       minimizeWindow: (windowId: string) => {
-        set((state) => ({
-          windows: {
-            ...state.windows,
-            [windowId]: {
-              ...state.windows[windowId],
-              isMinimized: true,
+        set((state) => {
+          const window = state.windows[windowId];
+          if (!window) return state;
+
+          return {
+            windows: {
+              ...state.windows,
+              [windowId]: {
+                ...window,
+                isMinimized: true,
+              },
             },
-          },
-        }));
+          };
+        });
       },
 
       // Tab操作
@@ -214,7 +234,8 @@ export const useDesktopStore = create<DesktopStore>()(
           // 如果删除的是当前活跃tab，选择下一个tab
           if (window.activeTabId === tabId) {
             if (updatedTabs.length > 0) {
-              newActiveTabId = updatedTabs[updatedTabs.length - 1].id;
+              const lastTab = updatedTabs[updatedTabs.length - 1];
+              newActiveTabId = lastTab ? lastTab.id : null;
             } else {
               newActiveTabId = null;
             }
@@ -272,7 +293,7 @@ export const useDesktopStore = create<DesktopStore>()(
           let sourceActiveTabId = sourceWindow.activeTabId;
 
           if (sourceWindow.activeTabId === tabId) {
-            sourceActiveTabId = sourceUpdatedTabs.length > 0 ? sourceUpdatedTabs[0].id : null;
+            sourceActiveTabId = sourceUpdatedTabs.length > 0 ? sourceUpdatedTabs[0]?.id || null : null;
           }
 
           // 添加到目标窗口

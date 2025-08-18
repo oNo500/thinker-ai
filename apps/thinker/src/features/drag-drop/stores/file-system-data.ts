@@ -1,4 +1,4 @@
-import type { FileSystemItem, FileSystemState } from './types';
+import type { FileSystemItem, FileSystemState } from '../types';
 
 // 生成唯一ID
 export function generateId(): string {
