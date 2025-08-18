@@ -2,6 +2,9 @@
   "name": "thinker-app",
   "version": "0.1.0",
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "^1.7.4",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
+    "@atlaskit/pragmatic-drag-and-drop-react-drop-indicator": "^3.2.4",
     "@hookform/resolvers": "^5.0.1",
     "@opentelemetry/api": "^1.9.0",
     "@repo/ui": "workspace:*",
@@ -64,7 +67,7 @@
   "scripts": {
     "build": "next build",
     "check-types": "tsc --noEmit --pretty",
-    "dev": "next dev --turbopack --port 3000",
+    "dev": "next dev --turbopack --port 3030",
     "lint": "eslint",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "mock:server": "pnpx tsx --watch ./src/mocks/server.ts",

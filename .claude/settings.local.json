@@ -17,7 +17,9 @@
       "Bash(jsrepo:*)",
       "Bash(pnpm run:*)",
       "Bash(rm:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "mcp__mcp-server-firecrawl__firecrawl_scrape",
+      "Bash(pnpm dlx:*)"
     ],
     "deny": []
   }
