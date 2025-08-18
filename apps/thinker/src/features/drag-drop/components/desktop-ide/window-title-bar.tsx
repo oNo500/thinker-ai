@@ -2,8 +2,8 @@
 
 import React, { useRef, useState } from 'react';
 import { Minus, Square, Maximize2, X, Move } from 'lucide-react';
-import { Button } from '@repo/ui/components/button';
 
+import { Button } from '@/components/ui/button';
 import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
 import type { Position } from '@/features/drag-drop/types';

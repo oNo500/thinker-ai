@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import ReactIcon from '@repo/icons/react.svg';
-import { Button } from '@repo/ui/components/button';
 import AppleIcon from '@repo/icons/apple.svg';
 import GoogleIcon from '@repo/icons/google.svg';
 import { useRouter } from 'next/navigation';
 
+import { Button } from '@/components/ui/button';
 import { paths } from '@/config/paths';
 import LoginForm from '@/features/auth/components/login-form';
 

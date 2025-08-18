@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NODE_ENV", "SENTRY_AUTH_TOKEN"]
+      "env": ["NODE_ENV", "SENTRY_AUTH_TOKEN", "MOCK_PORT", "CI"]
     },
     "storybook": {
       "cache": false,

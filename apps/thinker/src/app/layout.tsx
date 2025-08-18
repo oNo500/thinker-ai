@@ -1,7 +1,7 @@
-import { Toaster } from '@repo/ui/components/sonner';
 import '@/styles/index.css';
 
 import { AppProviders } from '@/components/providers';
+import { Toaster } from '@/components/ui/sonner';
 
 import type { Metadata } from 'next';
 

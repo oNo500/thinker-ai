@@ -1,12 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@repo/ui/components/dropdown-menu';
 import Link from 'next/link';
 import { useState } from 'react';
 import ReactIcon from '@repo/icons/react.svg';
@@ -14,6 +7,13 @@ import ReactIcon from '@repo/icons/react.svg';
 import { useLogout } from '@/auth';
 import { paths } from '@/config/paths';
 import { useUser } from '@/hooks/use-user';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import ThemeToggle from './theme-toggle';
 

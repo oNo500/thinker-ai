@@ -1,13 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@repo/ui/components/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@repo/ui/components/form';
-import { Input } from '@repo/ui/components/input';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 
+import { Button } from '@/components/ui/button';
 import { type RegisterRequest, useRegister } from '@/auth';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: 'First Name is required' }),

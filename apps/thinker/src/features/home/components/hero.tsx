@@ -1,6 +1,7 @@
-import { Button } from '@repo/ui/components/button';
 import Link from 'next/link';
 import GithubIcon from '@repo/icons/github.svg';
+
+import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   return (

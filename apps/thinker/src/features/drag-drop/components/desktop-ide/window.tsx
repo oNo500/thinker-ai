@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { Card } from '@repo/ui/components/card';
 
+import { Card } from '@/components/ui/card';
 import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
 import { WindowTitleBar } from './window-title-bar';

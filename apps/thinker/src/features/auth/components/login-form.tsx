@@ -1,12 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@repo/ui/components/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@repo/ui/components/form';
-import { Input } from '@repo/ui/components/input';
 import { cn } from '@repo/ui/lib/utils';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 
+import { Button } from '@/components/ui/button';
 import { useLogin, type LoginRequest } from '@/auth';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 const formSchema = z.object({
   email: z.string().min(1, { message: 'Email is required' }),

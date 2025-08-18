@@ -1,5 +1,5 @@
-import { toast } from '@repo/ui/components/sonner';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { apiClient } from '@/lib/api-client';
 import { queryClient } from '@/lib/query-client';
