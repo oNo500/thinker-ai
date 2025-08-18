@@ -1,0 +1,45 @@
+---
+alwaysApply: true
+description: 项目结构规范（MVP 阶段）
+---
+# 项目结构规范 (MVP)
+
+项目采用以下精简目录结构，聚焦核心功能开发：
+
+- `src/app/` - 应用程序层（路由入口）
+- `src/assets/` - 全局静态资源
+- `src/components/` - 全局共享组件
+- `src/config/` - 全局配置
+- `src/features/` - 特性模块（核心）
+  - 每个特性模块包含：
+    - `components/` - 功能组件（优先级最高）
+    - `api/` - 功能相关 API（必要时添加）
+    - `hooks/` - 功能 Hooks（必要时添加）
+    - `stores/` - 功能状态（必要时添加）
+    - `types/` - 功能类型（保持最小必要）
+    - `utils/` - 功能工具（保持最小必要）
+- `src/hooks/` - 全局共享 Hooks
+- `src/lib/` - 第三方库封装
+- `src/stores/` - 全局状态管理
+- `src/types/` - 全局类型定义
+
+## MVP 阶段开发原则
+
+1. **优先级排序**
+   - 首要实现核心功能组件
+   - 其次添加必要的状态管理
+   - 最后考虑工具函数和类型定义
+
+2. **代码组织**
+   - 新功能优先放在 features 目录
+   - 只有被多个功能共用的代码才提升到全局
+   - 保持目录结构扁平，避免过深的嵌套
+
+3. **快速迭代**
+   - 允许在验证阶段有适当的代码重复
+   - 在功能被验证后再考虑抽象和复用
+   - 优先使用简单直接的解决方案
+
+特性模块示例：
+[src/features/auth/components/login-form.tsx](mdc:src/features/auth/components/login-form.tsx)
+[src/features/home/components/hero.tsx](mdc:src/features/home/components/hero.tsx)

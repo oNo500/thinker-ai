@@ -1,0 +1,72 @@
+---
+globs: *.ts,*.tsx
+---
+# 导入规范
+
+## 导入顺序
+导入语句应按以下顺序分组：
+
+1. React 相关
+2. 外部依赖
+3. 内部模块
+4. 组件
+5. Hooks
+6. 工具函数
+7. 样式
+
+示例：
+```typescript
+// 1. React 相关
+import React, { useState, useEffect } from 'react';
+
+// 2. 外部依赖
+import { QueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
+
+// 3. 内部模块
+import { API_BASE_URL } from '@/config/env';
+import type { User } from '@/types/api';
+
+// 4. 组件
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+
+// 5. Hooks
+import { useAuth } from '@/hooks/use-auth';
+import { useUser } from '@/hooks/use-user';
+
+// 6. 工具函数
+import { formatDate } from '@/lib/utils';
+
+// 7. 样式
+import styles from './styles.module.css';
+```
+
+## 导入规则
+
+- 优先使用命名导入
+  ```typescript
+  // ✅ 正确
+  import { Button } from '@/components/ui/button';
+  
+  // ❌ 错误
+  import * as ButtonModule from '@/components/ui/button';
+  ```
+
+- 相对路径使用别名
+  ```typescript
+  // ✅ 正确
+  import { useAuth } from '@/hooks/use-auth';
+  
+  // ❌ 错误
+  import { useAuth } from '../../../hooks/use-auth';
+  ```
+
+- 避免默认导入（除了 React 组件）
+  ```typescript
+  // ✅ 正确
+  import { apiClient } from './api-client';
+  
+  // ❌ 错误
+  import apiClient from './api-client';
+  ```

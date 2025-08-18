@@ -1,0 +1,67 @@
+---
+alwaysApply: true
+---
+# 命名规范
+
+## 文件命名
+- 文件和目录使用 kebab-case
+  - ✅ `user-profile.tsx`
+  - ✅ `auth-service.ts`
+  - ❌ `userProfile.tsx`
+  - ❌ `AuthService.ts`
+
+## 代码命名
+- 函数使用 camelCase
+  ```typescript
+  // ✅ 正确
+  function getUserData() {}
+  const handleSubmit = () => {}
+  
+  // ❌ 错误
+  function GetUserData() {}
+  const Handle_Submit = () => {}
+  ```
+
+- 变量使用 camelCase
+  ```typescript
+  // ✅ 正确
+  const userData = {};
+  let isLoading = true;
+  
+  // ❌ 错误
+  const UserData = {};
+  let Is_Loading = true;
+  ```
+
+- 常量使用 UPPER_SNAKE_CASE
+  ```typescript
+  // ✅ 正确
+  const API_BASE_URL = 'https://api.example.com';
+  const MAX_RETRY_COUNT = 3;
+  
+  // ❌ 错误
+  const apiBaseUrl = 'https://api.example.com';
+  const maxRetryCount = 3;
+  ```
+
+- 类型和接口使用 PascalCase
+  ```typescript
+  // ✅ 正确
+  interface UserProfile {}
+  type AuthResponse = {}
+  
+  // ❌ 错误
+  interface userProfile {}
+  type authResponse = {}
+  ```
+
+- React 组件使用 PascalCase
+  ```typescript
+  // ✅ 正确
+  const UserProfile = () => {}
+  function LoginForm() {}
+  
+  // ❌ 错误
+  const userProfile = () => {}
+  function loginForm() {}
+  ```

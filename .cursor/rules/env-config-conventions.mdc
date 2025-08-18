@@ -1,0 +1,47 @@
+---
+alwaysApply: true
+description: 环境变量配置规范
+---
+# 环境变量配置规范
+
+## 环境文件
+
+每个应用目录必须包含：
+- `.env.example` - 环境变量模板
+- `.env` - 本地开发环境变量（已在 .gitignore 中忽略）
+
+## 环境变量命名
+
+- 使用 UPPER_SNAKE_CASE
+- 使用有意义的前缀分组相关变量
+  ```
+  # API 配置
+  API_BASE_URL=https://api.example.com
+  API_TIMEOUT=5000
+
+  # 认证配置
+  AUTH_SECRET=your-secret-key
+  AUTH_EXPIRES_IN=7d
+  ```
+
+## 环境变量验证
+
+- 使用 Zod 验证环境变量
+- 在应用启动时进行验证
+
+参考文件：
+[src/config/env.ts](mdc:src/config/env.ts)
+
+## 环境变量使用
+
+- 通过配置模块访问环境变量，不直接使用 process.env
+- 在 TypeScript 中定义环境变量类型
+
+```typescript
+// ✅ 正确
+import { env } from '@/config/env';
+const apiUrl = env.API_BASE_URL;
+
+// ❌ 错误
+const apiUrl = process.env.API_BASE_URL;
+```

@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+description: Monorepo 架构规范（MVP 阶段）
+---
+# Monorepo 架构规范 (MVP)
+
+## 工作区结构
+```
+.
+├── apps/           # 独立应用目录
+│   ├── land/      # Land 应用
+│   └── thinker/   # Thinker 应用
+│
+├── packages/       # 共享包目录
+│   ├── ui/        # UI 组件库
+│   ├── lint-config/  # ESLint 配置
+│   └── ts-config/   # TypeScript 配置
+```
+
+## MVP 阶段开发重点
+
+- 快速迭代和验证功能
+- 优先实现核心功能
+- 保持代码简洁，避免过度工程化
+- 关注用户反馈和产品验证
+
+## 应用开发规范
+
+- 应用代码必须放在 `apps/` 目录下
+- 共享代码必须放在 `packages/` 目录下
+- 每个应用必需配置：
+  - `package.json`
+  - `.env.example`
+  - `tsconfig.json`
+  - `eslint.config.ts`
+
+## 依赖管理
+
+- 使用 pnpm 作为包管理器
+- 版本要求：
+  - Node.js >= 22.11.0
+  - pnpm >= 10.12.1
+
+## 工作区配置
+
+参考文件：
+[pnpm-workspace.yaml](mdc:pnpm-workspace.yaml)
+[turbo.json](mdc:turbo.json)
+
+## 共享包开发规范（MVP 阶段）
+
+- UI 组件优先实现核心功能
+- 配置包保持最小必要配置
+- 版本控制采用快速迭代策略
+- 文档以快速上手为主

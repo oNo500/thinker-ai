@@ -1,0 +1,71 @@
+---
+globs: *.ts,*.tsx
+---
+# TypeScript 和 React 代码规范
+
+## TypeScript 规范
+
+- 优先使用 `const`，避免使用 `var`
+  ```typescript
+  // ✅ 正确
+  const user = { name: 'John' };
+  
+  // ❌ 错误
+  var user = { name: 'John' };
+  ```
+
+- 使用类型注解
+  ```typescript
+  // ✅ 正确
+  function getUser(id: string): User {}
+  
+  // ❌ 错误
+  function getUser(id) {}
+  ```
+
+- 避免使用 `any`
+  ```typescript
+  // ✅ 正确
+  function process(data: unknown) {}
+  
+  // ❌ 错误
+  function process(data: any) {}
+  ```
+
+## React 规范
+
+- 使用函数组件和 Hooks
+  ```typescript
+  // ✅ 正确
+  const UserProfile = () => {
+    const [user, setUser] = useState<User>();
+    return <div>{user.name}</div>;
+  };
+  
+  // ❌ 错误
+  class UserProfile extends React.Component {}
+  ```
+
+- 自定义 Hook 命名必须以 `use` 开头
+  ```typescript
+  // ✅ 正确
+  const useUserData = () => {};
+  
+  // ❌ 错误
+  const getUserData = () => {};
+  ```
+
+- Props 类型定义使用 interface
+  ```typescript
+  // ✅ 正确
+  interface UserProfileProps {
+    userId: string;
+    onUpdate: (user: User) => void;
+  }
+  
+  // ❌ 错误
+  type UserProfileProps = {
+    userId: string;
+    onUpdate: (user: User) => void;
+  }
+  ```

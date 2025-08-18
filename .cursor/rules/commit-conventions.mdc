@@ -1,0 +1,44 @@
+---
+alwaysApply: true
+description: Git 提交信息规范
+---
+# Git 提交信息规范
+
+## 提交信息格式
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+## 类型（Type）
+
+- feat: 新功能
+- fix: 修复
+- docs: 文档变更
+- style: 代码格式（不影响代码运行的变动）
+- refactor: 重构（既不是新增功能，也不是修改bug的代码变动）
+- perf: 性能优化
+- test: 增加测试
+- chore: 构建过程或辅助工具的变动
+
+## 示例
+
+```
+feat(auth): add social login with Google
+
+- Add Google OAuth integration
+- Update login form to include social login buttons
+- Add tests for social login flow
+
+Closes #123
+```
+
+## 工具配置
+
+参考文件：
+[commitlint.config.ts](mdc:commitlint.config.ts)
+[.husky/commit-msg](mdc:.husky/commit-msg)
