@@ -34,6 +34,7 @@ type TreeContextProps = {
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
   direction: 'rtl' | 'ltr';
+  onGlobalDrop?: (data: unknown) => void;
 };
 
 const TreeContext = createContext<TreeContextProps | null>(null);
@@ -57,6 +58,7 @@ type TreeViewProps = {
   initialExpandedItems?: string[];
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
+  onGlobalDrop?: (data: unknown) => void;
 } & TreeViewComponentProps;
 
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
@@ -71,6 +73,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
       openIcon,
       closeIcon,
       dir,
+      onGlobalDrop,
       ...props
     },
     ref,
@@ -138,6 +141,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           openIcon,
           closeIcon,
           direction,
+          onGlobalDrop,
         }}
       >
         <div className={cn('size-full', className)}>
@@ -148,7 +152,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
               defaultValue={expandedItems}
               value={expandedItems}
               className="flex flex-col gap-1"
-              onValueChange={(value) => setExpandedItems((prev) => [...(prev ?? []), value[0]])}
+              onValueChange={(value) => setExpandedItems((prev) => [...(prev ?? []), value[0]!])}
               dir={dir as Direction}
             >
               {children}
@@ -189,11 +193,42 @@ type FolderProps = {
   element: string;
   isSelectable?: boolean;
   isSelect?: boolean;
+  draggable?: boolean;
+  onDragStart?: (data: unknown) => void;
+  onDrop?: (data: unknown) => void;
+  getDragData?: () => unknown;
+  canDrop?: (data: unknown) => boolean;
+  onFolderToggle?: () => void;
 } & FolderComponentProps;
 
 const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, element, value, isSelectable = true, isSelect, children, ...props }, ref) => {
+  (
+    {
+      className,
+      element,
+      value,
+      isSelectable = true,
+      isSelect,
+      children,
+      draggable,
+      onDragStart,
+      onDrop,
+      getDragData,
+      canDrop,
+      onFolderToggle,
+      ...props
+    },
+    ref,
+  ) => {
     const { direction, handleExpand, expandedItems, indicator, setExpandedItems, openIcon, closeIcon } = useTree();
+
+    const handleToggleClick = () => {
+      if (onFolderToggle) {
+        onFolderToggle();
+      } else {
+        handleExpand(value);
+      }
+    };
 
     return (
       <AccordionPrimitive.Item {...props} value={value} className="relative h-full overflow-hidden">
@@ -204,7 +239,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             'cursor-not-allowed opacity-50': !isSelectable,
           })}
           disabled={!isSelectable}
-          onClick={() => handleExpand(value)}
+          onClick={handleToggleClick}
         >
           {expandedItems?.includes(value)
             ? (openIcon ?? <FolderOpenIcon className="size-4" />)
@@ -220,7 +255,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             defaultValue={expandedItems}
             value={expandedItems}
             onValueChange={(value) => {
-              setExpandedItems?.((prev) => [...(prev ?? []), value[0]]);
+              setExpandedItems?.((prev) => [...(prev ?? []), value[0]!]);
             }}
           >
             {children}
@@ -241,32 +276,61 @@ const File = forwardRef<
     isSelectable?: boolean;
     isSelect?: boolean;
     fileIcon?: React.ReactNode;
+    draggable?: boolean;
+    onDragStart?: (data: unknown) => void;
+    onDrop?: (data: unknown) => void;
+    getDragData?: () => unknown;
+    canDrop?: (data: unknown) => boolean;
   } & React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ value, className, handleSelect, isSelectable = true, isSelect, fileIcon, children, ...props }, ref) => {
-  const { direction, selectedId, selectItem } = useTree();
-  const isSelected = isSelect ?? selectedId === value;
-  return (
-    <button
-      ref={ref}
-      type="button"
-      disabled={!isSelectable}
-      className={cn(
-        'flex w-fit items-center gap-1 rounded-md pr-1 text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
-        {
-          'bg-muted': isSelected && isSelectable,
-        },
-        isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
-        direction === 'rtl' ? 'rtl' : 'ltr',
-        className,
-      )}
-      onClick={() => selectItem(value)}
-      {...props}
-    >
-      {fileIcon ?? <FileIcon className="size-4" />}
-      {children}
-    </button>
-  );
-});
+>(
+  (
+    {
+      value,
+      className,
+      handleSelect,
+      isSelectable = true,
+      isSelect,
+      fileIcon,
+      children,
+      draggable,
+      onDragStart,
+      onDrop,
+      getDragData,
+      canDrop,
+      ...props
+    },
+    ref,
+  ) => {
+    const { direction, selectedId, selectItem } = useTree();
+    const isSelected = isSelect ?? selectedId === value;
+    return (
+      <button
+        ref={ref}
+        type="button"
+        disabled={!isSelectable}
+        className={cn(
+          'flex w-fit items-center gap-1 rounded-md pr-1 text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
+          {
+            'bg-muted': isSelected && isSelectable,
+          },
+          isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
+          direction === 'rtl' ? 'rtl' : 'ltr',
+          className,
+        )}
+        onClick={() => {
+          selectItem(value);
+          if (handleSelect) {
+            handleSelect(value);
+          }
+        }}
+        {...props}
+      >
+        {fileIcon ?? <FileIcon className="size-4" />}
+        {children}
+      </button>
+    );
+  },
+);
 
 File.displayName = 'File';
 

@@ -162,11 +162,18 @@ export function TabContent({ windowId }: TabContentProps) {
   const { windows } = useDesktopStore();
   const window = windows[windowId];
 
-  if (!window) return null;
+  if (!window) {
+    console.log('Window not found:', windowId);
+    return null;
+  }
+
+  console.log('Window tabs:', window.tabs);
+  console.log('Active tab ID:', window.activeTabId);
 
   const activeTab = window.tabs.find((tab) => tab.id === window.activeTabId);
 
   if (!activeTab) {
+    console.log('No active tab found');
     return (
       <div className="flex flex-1 items-center justify-center bg-gray-50 dark:bg-gray-800">
         <div className="text-center text-gray-500 dark:text-gray-400">
@@ -179,6 +186,8 @@ export function TabContent({ windowId }: TabContentProps) {
       </div>
     );
   }
+
+  console.log('Active tab found:', activeTab);
 
   const extension = getFileExtension(activeTab.fileName);
   const lineCount = activeTab.content.split('\n').length;

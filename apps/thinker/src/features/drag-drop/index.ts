@@ -1,8 +1,9 @@
 // 文件管理器组件
 export { FilePreview } from './components/file-manager/file-preview';
 export { FileToolbar } from './components/file-manager/file-toolbar';
-export { FileTree } from './components/file-manager/file-tree';
 export { FileTreeItem } from './components/file-manager/file-tree-item';
+// 新的 Magic UI 增强文件树
+export { FileTree } from './components/file-manager/file-tree';
 
 // 桌面 IDE 组件
 export { Desktop } from './components/desktop-ide/desktop';
@@ -17,8 +18,6 @@ export { TabContent } from './components/desktop-ide/tab-system/tab-content';
 
 // Dock 组件
 export { Dock } from './components/dock/dock';
-export { DockItem } from './components/dock/dock-item';
-export { WindowPreview } from './components/dock/window-preview';
 export { ContextMenu } from './components/dock/context-menu';
 
 // 状态管理

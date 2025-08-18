@@ -27,7 +27,12 @@ export function Desktop({ children }: DesktopProps) {
       element,
       canDrop: ({ source }) => {
         const sourceData = source.data as Record<string, unknown>;
-        return sourceData.type === 'desktop-file' || sourceData.type === 'desktop-tab';
+        // 只允许文件拖拽到桌面，文件夹不允许
+        if (sourceData.type === 'file-system-item') {
+          const fileSystemData = sourceData;
+          return fileSystemData.itemType === 'file';
+        }
+        return sourceData.type === 'desktop-tab';
       },
       getData: () => ({
         type: 'desktop',
@@ -36,28 +41,39 @@ export function Desktop({ children }: DesktopProps) {
         const sourceData = source.data;
 
         // 检查是否有其他drop target处理了这个事件
-        const hasOtherTargets = location.current.dropTargets.some((target) => target.data.type !== 'desktop');
+        const hasOtherTargets = location.current.dropTargets.some((target) => {
+          const targetData = target.data;
+          // 如果目标类型是文件系统，说明是在文件系统内拖拽，不创建新窗口
+          return targetData.type === 'file-system' || targetData.targetType === 'file-system';
+        });
 
         if (hasOtherTargets) return;
 
-        if (sourceData.type === 'desktop-file') {
+        if (sourceData.type === 'file-system-item') {
           // 文件拖拽到桌面，创建新窗口
-          const fileData = sourceData as unknown as FileDragData;
-          const newTab = {
-            id: Math.random().toString(36).substring(2, 9),
-            fileId: fileData.fileId,
-            fileName: fileData.fileName,
-            content: fileData.content,
-            isActive: true,
+          const fileData = sourceData as {
+            itemId: string;
+            itemType: string;
+            itemName: string;
+            itemContent: string;
           };
+          if (fileData.itemType === 'file') {
+            const newTab = {
+              id: Math.random().toString(36).substring(2, 9),
+              fileId: fileData.itemId,
+              fileName: fileData.itemName || 'Untitled',
+              content: fileData.itemContent || '',
+              isActive: true,
+            };
 
-          createWindow({
-            title: `文件预览 - ${fileData.fileName}`,
-            position: { x: 200 + Object.keys(windows).length * 30, y: 100 + Object.keys(windows).length * 30 },
-            size: { width: 800, height: 600 },
-            hasFileTree: false,
-            initialTab: newTab,
-          });
+            createWindow({
+              title: `文件预览 - ${newTab.fileName}`,
+              position: { x: 200 + Object.keys(windows).length * 30, y: 100 + Object.keys(windows).length * 30 },
+              size: { width: 800, height: 600 },
+              hasFileTree: false,
+              initialTab: newTab,
+            });
+          }
         } else if (sourceData.type === 'desktop-tab') {
           // Tab拖拽到桌面，分离为新窗口
           const tabData = sourceData as unknown as TabDragData;
@@ -79,7 +95,7 @@ export function Desktop({ children }: DesktopProps) {
     return monitorForElements({
       canMonitor: ({ source }) => {
         const sourceData = source.data as Record<string, unknown>;
-        return sourceData.type === 'desktop-file' || sourceData.type === 'desktop-tab';
+        return sourceData.type === 'file-system-item' || sourceData.type === 'desktop-tab';
       },
       onDrop: ({ source, location }) => {
         // 这里可以添加全局拖拽完成后的清理逻辑

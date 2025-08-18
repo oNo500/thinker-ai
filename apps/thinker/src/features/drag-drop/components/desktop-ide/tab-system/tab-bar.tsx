@@ -16,7 +16,7 @@ interface TabBarProps {
 
 export function TabBar({ windowId }: TabBarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { windows, moveTab, addTab } = useDesktopStore();
+  const { windows, moveTab, addTab, reorderTab } = useDesktopStore();
 
   useEffect(() => {
     const element = ref.current;
@@ -59,21 +59,51 @@ export function TabBar({ windowId }: TabBarProps) {
         return sourceData.type === 'desktop-tab';
       },
       onDrop: ({ source, location }) => {
+        console.log('TabBar onDrop triggered:', { source, location });
         const sourceData = source.data as unknown as TabDragData;
         const destination = location.current.dropTargets[0];
 
-        if (!destination) return;
+        if (!destination) {
+          console.log('No destination found');
+          return;
+        }
 
         const instruction = extractInstruction(destination.data);
-        if (!instruction) return;
+        if (!instruction) {
+          console.log('No instruction found');
+          return;
+        }
 
         const targetWindowId = destination.data.windowId as string;
         const targetIndex = destination.data.targetIndex as number;
 
+        console.log('Drop data:', { targetWindowId, targetIndex, instruction });
+
         // 如果是同一个窗口内的重排序
+        console.log('在统一窗口内', {
+          sourceData,
+          targetWindowId,
+          targetIndex,
+          instruction,
+        });
         if (sourceData.windowId === targetWindowId) {
-          // TODO: 实现同窗口内tab重排序
-          console.log('Same window reorder:', instruction.operation, targetIndex);
+          // 实现同窗口内tab重排序
+          const sourceIndex = windows[sourceData.windowId]?.tabs.findIndex((t) => t.id === sourceData.tabId) ?? -1;
+          if (sourceIndex !== -1) {
+            let finalTargetIndex = targetIndex;
+
+            // 根据操作类型调整目标位置
+            if (instruction.operation === 'reorder-after') {
+              finalTargetIndex = targetIndex + 1;
+            }
+
+            // 如果是从前面移动到后面，需要调整目标位置
+            if (sourceIndex < finalTargetIndex) {
+              finalTargetIndex = finalTargetIndex - 1;
+            }
+
+            reorderTab(sourceData.windowId, sourceData.tabId, finalTargetIndex);
+          }
         } else {
           // 跨窗口移动tab
           const insertIndex = instruction.operation === 'reorder-before' ? targetIndex : targetIndex + 1;
@@ -81,7 +111,7 @@ export function TabBar({ windowId }: TabBarProps) {
         }
       },
     });
-  }, [moveTab]);
+  }, [moveTab, reorderTab, windows]);
 
   const window = windows[windowId];
   if (!window) return null;

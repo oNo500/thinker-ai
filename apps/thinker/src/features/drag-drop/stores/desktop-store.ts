@@ -10,7 +10,6 @@ import type {
   Position,
   DockConfig,
   DockItemData,
-  DockState,
 } from '../types';
 
 interface DesktopStore extends DesktopState {
@@ -29,6 +28,7 @@ interface DesktopStore extends DesktopState {
   removeTab: (windowId: string, tabId: string) => void;
   switchTab: (windowId: string, tabId: string) => void;
   moveTab: (fromWindow: string, toWindow: string, tabId: string, index?: number) => void;
+  reorderTab: (windowId: string, tabId: string, targetIndex: number) => void;
   updateTab: (windowId: string, tabId: string, updates: Partial<TabItem>) => void;
 
   // 拖拽状态
@@ -230,13 +230,21 @@ export const useDesktopStore = create<DesktopStore>()(
 
       // Tab操作
       addTab: (windowId: string, tab: TabItem) => {
+        console.log('Adding tab to window:', windowId, 'tab:', tab);
         set((state) => {
           const window = state.windows[windowId];
-          if (!window) return state;
+          if (!window) {
+            console.log('Window not found:', windowId);
+            return state;
+          }
+
+          console.log('Current window tabs:', window.tabs);
+          console.log('Current active tab ID:', window.activeTabId);
 
           // 检查tab是否已存在
           const existingTab = window.tabs.find((t) => t.fileId === tab.fileId);
           if (existingTab) {
+            console.log('Tab already exists, activating:', existingTab.id);
             // 如果tab已存在，直接激活它
             return {
               windows: {
@@ -249,10 +257,11 @@ export const useDesktopStore = create<DesktopStore>()(
             };
           }
 
+          console.log('Creating new tab with ID:', tab.id);
           // 取消当前活跃tab
           const updatedTabs = window.tabs.map((t) => ({ ...t, isActive: false }));
 
-          return {
+          const newState = {
             windows: {
               ...state.windows,
               [windowId]: {
@@ -262,6 +271,9 @@ export const useDesktopStore = create<DesktopStore>()(
               },
             },
           };
+
+          console.log('New state:', newState.windows[windowId]);
+          return newState;
         });
       },
 
@@ -367,6 +379,49 @@ export const useDesktopStore = create<DesktopStore>()(
         });
       },
 
+      reorderTab: (windowId: string, tabId: string, targetIndex: number) => {
+        set((state) => {
+          const window = state.windows[windowId];
+          if (!window) return state;
+
+          const currentIndex = window.tabs.findIndex((t) => t.id === tabId);
+          if (currentIndex === -1) return state;
+
+          // 如果目标位置就是当前位置，不需要重排序
+          if (currentIndex === targetIndex) return state;
+
+          // 创建新的tabs数组
+          const updatedTabs = [...window.tabs];
+
+          // 移除要移动的tab
+          const [tabToMove] = updatedTabs.splice(currentIndex, 1);
+
+          if (tabToMove) {
+            // 直接插入到目标位置
+            updatedTabs.splice(targetIndex, 0, tabToMove);
+          }
+
+          console.log('reorderTab:', {
+            windowId,
+            tabId,
+            currentIndex,
+            targetIndex,
+            originalTabs: window.tabs.map((t) => t.id),
+            updatedTabs: updatedTabs.map((t) => t.id),
+          });
+
+          return {
+            windows: {
+              ...state.windows,
+              [windowId]: {
+                ...window,
+                tabs: updatedTabs,
+              },
+            },
+          };
+        });
+      },
+
       updateTab: (windowId: string, tabId: string, updates: Partial<TabItem>) => {
         set((state) => {
           const window = state.windows[windowId];
@@ -422,11 +477,47 @@ export const useDesktopStore = create<DesktopStore>()(
 
       updateDockItems: () => {
         const { windows, activeWindowId } = get();
+
+        // 获取窗口图标的辅助函数
+        const getWindowIcon = (window: WindowState): string => {
+          if (window.hasFileTree) {
+            return 'folder';
+          }
+
+          // 根据第一个 tab 的文件类型来确定图标
+          if (window.tabs.length > 0) {
+            const firstTab = window.tabs[0];
+            if (firstTab) {
+              const fileName = firstTab.fileName;
+              const ext = fileName.split('.').pop()?.toLowerCase();
+
+              switch (ext) {
+                case 'ts':
+                case 'tsx':
+                case 'js':
+                case 'jsx':
+                  return 'code';
+                case 'md':
+                  return 'file-text';
+                case 'json':
+                  return 'settings';
+                case 'css':
+                case 'scss':
+                  return 'paintbrush';
+                default:
+                  return 'file';
+              }
+            }
+          }
+
+          return 'file';
+        };
+
         const dockItems: DockItemData[] = Object.values(windows).map((window, index) => ({
           id: window.id,
           windowId: window.id,
           title: window.title,
-          icon: window.hasFileTree ? '📁' : '📄',
+          icon: getWindowIcon(window),
           isActive: activeWindowId === window.id && !window.isMinimized,
           isMinimized: window.isMinimized,
           hasMultipleTabs: window.tabs.length > 1,

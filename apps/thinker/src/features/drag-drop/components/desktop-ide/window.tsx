@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 
 import { Card } from '@/components/ui/card';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
 import { WindowTitleBar } from './window-title-bar';
@@ -109,27 +110,43 @@ export function Window({ windowId, children }: WindowProps) {
   return (
     <Card
       ref={windowRef}
-      className={`overflow-hidden border border-gray-300 shadow-lg dark:border-gray-600 ${isResizing ? 'select-none' : ''} `}
+      className={`overflow-hidden border border-gray-300 py-0 shadow-lg dark:border-gray-600 ${isResizing ? 'select-none' : ''} `}
       style={windowStyle}
       onMouseDown={handleMouseDown}
     >
       {/* 窗口标题栏 */}
       <WindowTitleBar windowId={windowId} title={window.title} onStartDrag={handleStartDrag} />
 
-      {/* Tab栏 */}
-      <TabBar windowId={windowId} />
-
       {/* 窗口内容区域 */}
-      <div className="flex flex-1 overflow-hidden" style={{ height: 'calc(100% - 72px)' }}>
-        {/* 左侧文件树（仅主窗口有） */}
-        {window.hasFileTree && children && (
-          <div className="w-80 flex-shrink-0 border-r border-gray-200 dark:border-gray-700">{children}</div>
-        )}
+      <div className="flex-1 overflow-hidden" style={{ height: 'calc(100% - 72px)' }}>
+        {window.hasFileTree && children ? (
+          <ResizablePanelGroup direction="horizontal" className="h-full">
+            {/* 左侧文件树面板 */}
+            <ResizablePanel defaultSize={30} minSize={20} maxSize={50} className="min-w-0">
+              <div className="h-full overflow-hidden">{children}</div>
+            </ResizablePanel>
 
-        {/* 右侧Tab内容 */}
-        <div className="flex flex-1 flex-col">
-          <TabContent windowId={windowId} />
-        </div>
+            {/* 可调整大小的分隔条 */}
+            <ResizableHandle withHandle />
+
+            {/* 右侧Tab内容面板 */}
+            <ResizablePanel defaultSize={70} minSize={50} className="min-w-0">
+              <div className="flex h-full flex-col">
+                {/* Tab栏 - 只在右侧内容区域显示 */}
+                <TabBar windowId={windowId} />
+
+                {/* Tab内容 - 只在右侧内容区域显示 */}
+                <TabContent windowId={windowId} />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        ) : (
+          /* 没有文件树时的全屏布局 */
+          <div className="flex h-full flex-col">
+            <TabBar windowId={windowId} />
+            <TabContent windowId={windowId} />
+          </div>
+        )}
       </div>
 
       {/* 调整大小的拖拽手柄 */}

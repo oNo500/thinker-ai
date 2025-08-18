@@ -81,7 +81,7 @@ export function Tab({ tab, windowId, index }: TabProps) {
         },
         getData: ({ input, element }) => {
           const data = {
-            type: 'tab-reorder',
+            type: 'tab-area',
             windowId,
             targetIndex: index,
           };
@@ -102,8 +102,29 @@ export function Tab({ tab, windowId, index }: TabProps) {
         onDragLeave: () => {
           setInstruction(null);
         },
-        onDrop: () => {
+        onDrop: ({ source }) => {
           setInstruction(null);
+
+          console.log('Tab onDrop triggered:', { source, windowId, index, tabId: tab.id });
+
+          // 直接处理同窗口内的tab重排序
+          const sourceData = source.data as Record<string, unknown>;
+          if (sourceData.type === 'desktop-tab' && sourceData.windowId === windowId) {
+            const sourceTabId = sourceData.tabId as string;
+
+            console.log('Processing tab reorder:', { sourceTabId, targetIndex: index });
+
+            if (sourceTabId !== tab.id) {
+              // 调用store的重排序方法
+              const { reorderTab } = useDesktopStore.getState();
+              console.log('Calling reorderTab:', { windowId, sourceTabId, index });
+              reorderTab(windowId, sourceTabId, index);
+            } else {
+              console.log('Same tab, skipping reorder');
+            }
+          } else {
+            console.log('Not a valid tab reorder:', sourceData);
+          }
         },
       }),
     );
@@ -155,7 +176,15 @@ export function Tab({ tab, windowId, index }: TabProps) {
       </div>
 
       {/* 拖拽指示器 */}
-      {instruction && <DropIndicator instruction={instruction} />}
+      {instruction && (
+        <DropIndicator
+          instruction={{
+            ...instruction,
+            axis: 'horizontal',
+            blocked: false,
+          }}
+        />
+      )}
     </button>
   );
 }

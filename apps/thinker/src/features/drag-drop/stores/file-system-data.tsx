@@ -1,4 +1,7 @@
-import type { FileSystemItem, FileSystemState } from '../types';
+import { Folder, FolderOpen, FileText, FileIcon, Settings, Paintbrush, Code2 } from 'lucide-react';
+
+import type { ReactNode } from 'react';
+import type { FileSystemItem, FileSystemState, FileSystemInstruction } from '../types';
 
 // 生成唯一ID
 export function generateId(): string {
@@ -165,28 +168,142 @@ export function getFileExtension(fileName: string): string {
   return lastDot > 0 ? fileName.substring(lastDot + 1) : '';
 }
 
-// 工具函数：获取文件图标类名
-export function getFileIcon(item: FileSystemItem): string {
+// 工具函数：获取文件图标
+export function getFileIcon(item: FileSystemItem): ReactNode {
   if (item.type === 'folder') {
-    return item.isOpen ? '📂' : '📁';
+    return item.isOpen ? <FolderOpen className="size-4" /> : <Folder className="size-4" />;
   }
 
   const ext = getFileExtension(item.name);
   switch (ext) {
     case 'ts':
     case 'tsx':
-      return '🔷';
     case 'js':
     case 'jsx':
-      return '🟨';
+      return <Code2 className="size-4" />;
     case 'md':
-      return '📝';
+      return <FileText className="size-4" />;
     case 'json':
-      return '⚙️';
+      return <Settings className="size-4" />;
     case 'css':
     case 'scss':
-      return '🎨';
+      return <Paintbrush className="size-4" />;
     default:
-      return '📄';
+      return <FileIcon className="size-4" />;
   }
+}
+
+// 文件系统操作函数
+export function moveItem(
+  items: Record<string, FileSystemItem>,
+  sourceId: string,
+  instruction: FileSystemInstruction,
+): Record<string, FileSystemItem> {
+  const newItems = { ...items };
+  const sourceItem = newItems[sourceId];
+
+  if (!sourceItem) return items;
+
+  // 从原位置移除
+  if (sourceItem.parent) {
+    const parent = newItems[sourceItem.parent];
+    if (parent && parent.children) {
+      parent.children = parent.children.filter((id) => id !== sourceId);
+    }
+  } else {
+    // 从根级别移除
+    // 这里需要调用者处理 rootItems 数组
+  }
+
+  // 根据指令类型执行移动
+  switch (instruction.type) {
+    case 'move-into-folder': {
+      const targetFolder = newItems[instruction.targetId];
+      if (targetFolder && targetFolder.type === 'folder') {
+        // 移动到文件夹内
+        sourceItem.parent = instruction.targetId;
+        if (!targetFolder.children) {
+          targetFolder.children = [];
+        }
+        targetFolder.children.push(sourceId);
+      }
+      break;
+    }
+
+    case 'reorder-before': {
+      const targetItem = newItems[instruction.targetId];
+      if (targetItem) {
+        // 移动到目标项之前
+        sourceItem.parent = targetItem.parent;
+
+        if (targetItem.parent) {
+          // 移动到父文件夹内
+          const parent = newItems[targetItem.parent];
+          if (parent && parent.children) {
+            const targetIndex = parent.children.indexOf(instruction.targetId);
+            parent.children.splice(targetIndex, 0, sourceId);
+          }
+        } else {
+          // 移动到根级别
+          // 这里需要调用者处理 rootItems 数组
+        }
+      }
+      break;
+    }
+
+    case 'reorder-after': {
+      const targetItem = newItems[instruction.targetId];
+      if (targetItem) {
+        // 移动到目标项之后
+        sourceItem.parent = targetItem.parent;
+
+        if (targetItem.parent) {
+          // 移动到父文件夹内
+          const parent = newItems[targetItem.parent];
+          if (parent && parent.children) {
+            const targetIndex = parent.children.indexOf(instruction.targetId);
+            parent.children.splice(targetIndex + 1, 0, sourceId);
+          }
+        } else {
+          // 移动到根级别
+          // 这里需要调用者处理 rootItems 数组
+        }
+      }
+      break;
+    }
+  }
+
+  return newItems;
+}
+
+// 获取项目的所有子项（递归）
+export function getAllChildren(items: Record<string, FileSystemItem>, itemId: string): string[] {
+  const item = items[itemId];
+  if (!item || !item.children) return [];
+
+  const allChildren: string[] = [];
+  const stack = [...item.children];
+
+  while (stack.length > 0) {
+    const childId = stack.pop()!;
+    allChildren.push(childId);
+
+    const child = items[childId];
+    if (child && child.children && child.children.length > 0) {
+      stack.push(...child.children);
+    }
+  }
+
+  return allChildren;
+}
+
+// 检查项目是否为文件夹且可以接收子项
+export function canReceiveChildren(item: FileSystemItem): boolean {
+  return item.type === 'folder' && !item.isOpen; // 关闭的文件夹可以接收子项
+}
+
+// 获取项目的显示名称（包含路径信息）
+export function getItemDisplayName(items: Record<string, FileSystemItem>, itemId: string): string {
+  const path = getPathToItem(items, itemId);
+  return path.map((id) => items[id]?.name || id).join(' / ');
 }

@@ -77,10 +77,6 @@ export function WindowTitleBar({ windowId, title, onStartDrag }: WindowTitleBarP
     document.addEventListener('mouseup', handleMouseUp);
   };
 
-  const handleDoubleClick = () => {
-    handleMaximize();
-  };
-
   return (
     <div
       ref={titleBarRef}
@@ -89,7 +85,6 @@ export function WindowTitleBar({ windowId, title, onStartDrag }: WindowTitleBarP
       aria-label={`移动窗口 ${title}`}
       className={`flex h-8 cursor-move select-none items-center justify-between border-b border-gray-200 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} `}
       onMouseDown={handleMouseDown}
-      onDoubleClick={handleDoubleClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
