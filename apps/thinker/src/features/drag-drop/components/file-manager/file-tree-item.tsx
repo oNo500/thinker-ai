@@ -10,9 +10,9 @@ import {
 import { DropIndicator } from '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator/list-item';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 
-import { getFileIcon, canMoveItem } from './file-system-data';
+import { getFileIcon, canMoveItem } from '@/features/drag-drop/stores/file-system-data';
 
-import type { FileSystemItem, DragData, FileSystemInstruction } from './types';
+import type { FileSystemItem, DragData, FileSystemInstruction } from '@/features/drag-drop/types';
 
 interface FileTreeItemProps {
   item: FileSystemItem;

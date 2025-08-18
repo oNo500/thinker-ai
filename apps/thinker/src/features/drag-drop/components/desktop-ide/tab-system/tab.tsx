@@ -12,9 +12,9 @@ import { DropIndicator } from '@atlaskit/pragmatic-drag-and-drop-react-drop-indi
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { Button } from '@repo/ui/components/button';
 
-import { useDesktopStore } from '../../stores/desktop-store';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { TabItem, TabDragData } from '../../types';
+import type { TabItem, TabDragData } from '@/features/drag-drop/types';
 
 interface TabProps {
   tab: TabItem;

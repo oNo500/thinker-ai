@@ -3,12 +3,13 @@
 import React, { useRef, useState } from 'react';
 import { Card } from '@repo/ui/components/card';
 
-import { WindowTitleBar } from './WindowTitleBar';
-import { TabBar } from './TabSystem/TabBar';
-import { TabContent } from './TabSystem/TabContent';
-import { useDesktopStore } from '../stores/desktop-store';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { Position } from '../types';
+import { WindowTitleBar } from './window-title-bar';
+import { TabBar } from './tab-system/tab-bar';
+import { TabContent } from './tab-system/tab-content';
+
+import type { Position } from '@/features/drag-drop/types';
 
 interface WindowProps {
   windowId: string;

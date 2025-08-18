@@ -33,3 +33,6 @@ export type FileSystemInstruction =
   | { type: 'move-into-folder'; targetId: string }
   | { type: 'reorder-before'; targetId: string }
   | { type: 'reorder-after'; targetId: string };
+
+// 导出桌面 IDE 相关类型
+export * from './desktop';

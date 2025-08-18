@@ -3,13 +3,14 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 
-import { FileTreeItem } from './FileTreeItem';
-import { FileToolbar } from './FileToolbar';
-import { getInitialFileSystemState, canMoveItem, generateId } from './file-system-data';
+import { FileTreeItem } from '@/features/drag-drop/components/file-manager/file-tree-item';
+import { FileToolbar } from '@/features/drag-drop/components/file-manager/file-toolbar';
+import { getInitialFileSystemState, canMoveItem, generateId } from '@/features/drag-drop/stores/file-system-data';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { FileSystemState, FileSystemItem, FileSystemInstruction, DragData } from './types';
+import type { FileSystemState, FileSystemItem, FileSystemInstruction, DragData } from '@/features/drag-drop/types';
 
-// Reducer actions
+// 复用原有的reducer逻辑
 type FileSystemAction =
   | { type: 'SELECT_FILE'; fileId: string }
   | { type: 'TOGGLE_FOLDER'; folderId: string }
@@ -69,7 +70,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
         case 'move-into-folder': {
           const targetFolder = newItems[instruction.targetId];
           if (targetFolder && targetFolder.type === 'folder') {
-            // 移动到文件夹内
             newItems[sourceId] = {
               ...sourceItem,
               parent: instruction.targetId,
@@ -104,7 +104,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
           const insertIndex = instruction.type === 'reorder-before' ? targetIndex : targetIndex + 1;
           targetArray.splice(insertIndex, 0, sourceId);
 
-          // 更新源项目的父级
           newItems[sourceId] = {
             ...sourceItem,
             parent: targetParent,
@@ -146,7 +145,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
       const newRootItems = [...state.rootItems];
 
       if (action.parentId) {
-        // 添加到父文件夹
         const parent = newItems[action.parentId];
         if (parent && parent.type === 'folder') {
           newItems[action.parentId] = {
@@ -155,7 +153,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
           };
         }
       } else {
-        // 添加到根目录
         newRootItems.push(newId);
       }
 
@@ -174,7 +171,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
       const newItems = { ...state.items };
       let newRootItems = [...state.rootItems];
 
-      // 递归删除子项
       const deleteRecursively = (itemId: string) => {
         const item = newItems[itemId];
         if (item && item.children) {
@@ -185,7 +181,6 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
 
       deleteRecursively(action.itemId);
 
-      // 从父级移除
       if (itemToDelete.parent) {
         const parent = newItems[itemToDelete.parent];
         if (parent && parent.children) {
@@ -211,22 +206,31 @@ function fileSystemReducer(state: FileSystemState, action: FileSystemAction): Fi
   }
 }
 
-interface FileTreeProps {
-  onFileSelect: (fileId: string, content: string) => void;
+interface EnhancedFileTreeProps {
+  windowId: string;
 }
 
-export function FileTree({ onFileSelect }: FileTreeProps) {
+export function EnhancedFileTree({ windowId }: EnhancedFileTreeProps) {
   const [state, dispatch] = useReducer(fileSystemReducer, null, getInitialFileSystemState);
+  const { addTab } = useDesktopStore();
 
   const handleSelect = useCallback(
     (itemId: string) => {
       dispatch({ type: 'SELECT_FILE', fileId: itemId });
       const item = state.items[itemId];
       if (item && item.type === 'file' && item.content) {
-        onFileSelect(itemId, item.content);
+        // 创建新的tab
+        const newTab = {
+          id: Math.random().toString(36).substring(2, 9),
+          fileId: itemId,
+          fileName: item.name,
+          content: item.content,
+          isActive: true,
+        };
+        addTab(windowId, newTab);
       }
     },
-    [state.items, onFileSelect],
+    [state.items, windowId, addTab],
   );
 
   const handleToggleFolder = useCallback((folderId: string) => {
@@ -235,14 +239,12 @@ export function FileTree({ onFileSelect }: FileTreeProps) {
 
   const handleMove = useCallback(
     (instruction: FileSystemInstruction, sourceId: string) => {
-      // 验证移动是否有效
       if (instruction.type === 'move-into-folder') {
         if (!canMoveItem(state.items, sourceId, instruction.targetId)) return;
       } else {
         const targetItem = state.items[instruction.targetId];
         if (!targetItem) return;
 
-        // 对于重新排序，检查是否移动到自己的子项中
         if (!canMoveItem(state.items, sourceId, instruction.targetId)) return;
       }
 
@@ -273,10 +275,7 @@ export function FileTree({ onFileSelect }: FileTreeProps) {
         return data.type === 'file-system-item';
       },
       onDrop: ({ source, location }) => {
-        // 这里可以添加额外的全局拖拽逻辑
-        // 比如拖拽到空白区域的处理
         if (location.current.dropTargets.length === 0) {
-          // 拖拽到空白区域，可以移动到根目录
           const sourceData = source.data as DragData;
           console.log('Dropped to empty area:', sourceData.itemId);
         }
@@ -284,7 +283,6 @@ export function FileTree({ onFileSelect }: FileTreeProps) {
     });
   }, []);
 
-  // 递归渲染文件树项目
   const renderItems = (itemIds: string[], level: number = 0): React.ReactNode => {
     return itemIds.map((itemId) => {
       const item = state.items[itemId];

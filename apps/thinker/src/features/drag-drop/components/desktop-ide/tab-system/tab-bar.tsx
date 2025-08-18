@@ -4,10 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { dropTargetForElements, monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 
-import { Tab } from './Tab';
-import { useDesktopStore } from '../../stores/desktop-store';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { TabDragData, FileDragData } from '../../types';
+import { Tab } from './tab';
+
+import type { TabDragData, FileDragData } from '@/features/drag-drop/types';
 
 interface TabBarProps {
   windowId: string;

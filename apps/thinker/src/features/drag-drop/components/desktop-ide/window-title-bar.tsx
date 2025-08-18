@@ -4,9 +4,9 @@ import React, { useRef, useState } from 'react';
 import { Minus, Square, Maximize2, X, Move } from 'lucide-react';
 import { Button } from '@repo/ui/components/button';
 
-import { useDesktopStore } from '../stores/desktop-store';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { Position } from '../types';
+import type { Position } from '@/features/drag-drop/types';
 
 interface WindowTitleBarProps {
   windowId: string;

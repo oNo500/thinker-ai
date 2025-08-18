@@ -3,10 +3,11 @@
 import React, { useEffect, useRef } from 'react';
 import { dropTargetForElements, monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 
-import { Window } from './Window';
-import { useDesktopStore } from '../stores/desktop-store';
+import { useDesktopStore } from '@/features/drag-drop/stores/desktop-store';
 
-import type { FileDragData, TabDragData } from '../types';
+import { Window } from './window';
+
+import type { FileDragData, TabDragData } from '@/features/drag-drop/types';
 
 interface DesktopProps {
   children?: React.ReactNode;

@@ -2,9 +2,7 @@
 
 import React, { useEffect } from 'react';
 
-import { Desktop } from './desktop-ide/components/Desktop';
-import { EnhancedFileTree } from './desktop-ide/components/EnhancedFileTree';
-import { useDesktopStore } from './desktop-ide/stores/desktop-store';
+import { Desktop, EnhancedFileTree, useDesktopStore } from '@/features/drag-drop';
 
 export default function FileSystemPage() {
   const { windows, createWindow } = useDesktopStore();
