@@ -21,6 +21,12 @@ export function FileTree({ onFileSelect }: FileTreeProps) {
   // 监听全局拖拽事件
   useGlobalDragMonitor();
 
+  const handleDeleteSelected = useCallback(() => {
+    if (selectedFile) {
+      deleteItem(selectedFile);
+    }
+  }, [selectedFile, deleteItem]);
+
   const handleSelect = useCallback(
     (itemId: string) => {
       selectFile(itemId);
@@ -72,7 +78,7 @@ export function FileTree({ onFileSelect }: FileTreeProps) {
       <FileToolbar
         onCreateFile={createFile}
         onCreateFolder={createFolder}
-        onDeleteSelected={deleteItem}
+        onDeleteSelected={handleDeleteSelected}
         hasSelectedItem={!!selectedFile}
       />
       <div className="h-full overflow-y-auto p-2">{renderItems(rootItems)}</div>

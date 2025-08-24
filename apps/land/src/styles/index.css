@@ -1,4 +1,5 @@
-@import '@repo/ui';
+/* @import '@repo/ui'; */
+@import 'tailwindcss';
 
 @keyframes tech-scroll-left {
   0% {
