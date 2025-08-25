@@ -1,5 +1,4 @@
 import { PHASE_DEVELOPMENT_SERVER } from 'next/constants';
-import withBundleAnalyzer from '@next/bundle-analyzer';
 
 import type { NextConfig } from 'next';
 
@@ -27,9 +26,5 @@ const nextConfig: NextConfig = (phase: string, { defaultConfig }: { defaultConfi
       }),
 });
 
-const witchBundleAnalyzer = withBundleAnalyzer({
-  enabled: true,
-});
 
-// export default witchBundleAnalyzer(withSentry(nextConfig));
 export default nextConfig;

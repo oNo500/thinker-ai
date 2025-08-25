@@ -1,4 +1,3 @@
-import { Toaster } from '@repo/ui/components/sonner';
 import '@/styles/index.css';
 
 import { AppProviders } from '@/components/providers';
@@ -19,7 +18,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`}>
         <AppProviders>
-          <Toaster />
           {children}
         </AppProviders>
       </body>
