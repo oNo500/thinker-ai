@@ -2,15 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 落地页规划规则
-
-善于使用 `sequential-thinking` 进行落地页规划。
-善于使用 `│ @21st-dev/magic` 根据prd内容捕获灵感。
-善于使用 `Context 7` 规范技术抉择最佳实践
-善于使用 `reactbits`的组件 进行效果设计 
-
-基础组件使用shadcn/un，它被安装在/packages/ui目录下。遇到还没有的基础组件，可以使用 `pnpm dlx shadcn@latest add component-name` 命令添加。
-
 ## Development Commands
 
 ### Core Commands
@@ -25,8 +16,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Each app in `apps/` has its own package.json with scripts:
 - `dev` - Development server (thinker-ai-code: port 3000, nextjs-app: port 3001)
 - `build` - Production build
-- `test` - Run Vitest unit tests with UI
-- `test:e2e` - Run Playwright E2E tests
 - `mock:server` - Start MSW mock server for development
 
 ### UI Package Commands (packages/ui)
@@ -49,7 +38,6 @@ Both apps feature:
 - TanStack Query for data fetching
 - Full authentication flow
 - MSW for API mocking
-- Vitest + Playwright testing
 
 ### Shared Packages (`packages/`)
 - **@repo/ui** - Shared UI component library based on shadcn/ui with Storybook
@@ -80,12 +68,8 @@ Both apps feature:
 - **ESLint + Prettier** for code quality
 - **Commitlint** with conventional commits
 - **Husky** for git hooks
-
-### Testing
-- **Vitest** for unit/component testing with browser mode
-- **Playwright** for E2E testing
 - **MSW** for API mocking
-- **Storybook** for component development/testing
+- **Storybook** for component development
 
 ### Monitoring & Analytics
 - **Sentry** for error tracking
@@ -121,21 +105,6 @@ Follows conventional commits with strict rules:
 - Scope max 10 characters
 - Body lines max 100 characters
 
-## Testing Strategy
-
-### Unit/Component Tests
-- Use Vitest with browser mode
-- Test utilities from @testing-library/react
-- Run with `pnpm test` in app directories
-
-### E2E Tests
-- Playwright tests in `e2e/` directories
-- Run with `pnpm test:e2e`
-- Include smoke tests and critical user flows
-
-### Component Testing
-- Storybook stories for visual testing
-- Accessible component examples
 
 ## Environment Requirements
 - **Node.js**: >=22.11.0
