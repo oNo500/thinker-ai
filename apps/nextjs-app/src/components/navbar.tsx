@@ -63,7 +63,7 @@ export default function Navbar() {
               {item.name}
             </Link>
           ))}
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="flex items-center gap-8">
             <div className="flex items-center justify-center">
               <Search className="h-5 w-5 text-gray-600" />
             </div>
