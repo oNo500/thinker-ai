@@ -26,5 +26,4 @@ const nextConfig: NextConfig = (phase: string, { defaultConfig }: { defaultConfi
       }),
 });
 
-
 export default nextConfig;

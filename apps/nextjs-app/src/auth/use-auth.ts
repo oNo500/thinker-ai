@@ -27,10 +27,8 @@ export const useLogin = () => {
       const response = await apiClient.post<User>('/api/auth/login', data);
       return response;
     },
-    onSuccess: (data) => {
-    },
-    onError: (error: ApiError) => {
-    },
+    onSuccess: (data) => {},
+    onError: (error: ApiError) => {},
   });
 };
 
@@ -40,10 +38,8 @@ export const useRegister = () => {
       const response = await apiClient.post<ApiResponse<User>>('/api/auth/register', data);
       return response.data;
     },
-    onSuccess: () => {
-    },
-    onError: (error: ApiError) => {
-    },
+    onSuccess: () => {},
+    onError: (error: ApiError) => {},
   });
 };
 
@@ -52,8 +48,7 @@ export const useLogout = () => {
     mutationFn: async () => {
       await apiClient.post('/api/auth/logout');
     },
-    onSuccess: () => {
-    },
+    onSuccess: () => {},
     onSettled: () => {
       queryClient.clear();
     },
