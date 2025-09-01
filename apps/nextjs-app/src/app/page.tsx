@@ -20,7 +20,7 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100">
-        <Navbar isLoggedIn={await isLoggedIn()} />
+        <Navbar />
         <main className="relative">
           <Hero />
           <StatsSection />
