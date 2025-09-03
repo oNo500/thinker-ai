@@ -1,4 +1,4 @@
-// @ts-expect-error 
+// @ts-expect-error
 import pluginNext from '@next/eslint-plugin-next';
 import type { FlatConfig } from '@typescript-eslint/utils/ts-eslint';
 import pluginJsxA11y from 'eslint-plugin-jsx-a11y';

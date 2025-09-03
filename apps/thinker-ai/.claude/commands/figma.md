@@ -3,16 +3,19 @@
 ## 📋 **还原流程**
 
 ### 1. 获取 Figma 数据
+
 - 使用 Figma MCP 获取组件/页面设计数据
 - 提取颜色、尺寸、文字等样式信息
 - 获取图片和 SVG 资源
 
 ### 2. 样式优先级
+
 1. **Figma 设计稿** - 最终视觉标准
-2. **现有 Tailwind 设计令牌** - 技术实现方式  
+2. **现有 Tailwind 设计令牌** - 技术实现方式
 3. **现有 UI 组件** - 复用基础架构
 
 ### 3. 实施步骤
+
 1. **现有代码分析**: 识别需要改造的现有组件和页面
 2. **样式差异对比**: Figma 设计 vs 现有实现的视觉差异
 3. **样式改造**: 修改现有组件的样式以匹配 Figma 设计
@@ -28,7 +31,7 @@ className="bg-background text-foreground border-border"
 // 如果现有令牌无法满足需求，使用 Figma 设计稿中的颜色
 // 例如：Figma 设计稿中的颜色
 className="bg-[#f1f2ff] text-[#333333] border-[#cccccc]"
-// 特殊颜色使用现有的 CSS Variables  
+// 特殊颜色使用现有的 CSS Variables
 style={{backgroundColor: 'var(--bg-primary)'}}
 
 // 如果都没有，使用 Tailwind 任意值
@@ -38,17 +41,19 @@ className="bg-[#f1f2ff]"
 ## 🛠 **资产处理**
 
 ### 开发阶段
+
 ```tsx
 // ✅ 开发时：直接使用 Figma MCP 的 localhost 源
 if (figmaAsset.src?.startsWith('http://localhost')) {
-  return <img src={figmaAsset.src} alt={figmaAsset.alt} />
+  return <img src={figmaAsset.src} alt={figmaAsset.alt} />;
 }
 
 // ✅ 无 localhost 源：使用现有图标库
-return <Search className="w-4 h-4" /> // Lucide React
+return <Search className="h-4 w-4" />; // Lucide React
 ```
 
 ### 生产部署
+
 ```bash
 # 构建前运行资产下载脚本
 npm run download-figma-assets
@@ -60,37 +65,36 @@ npm run download-figma-assets
 ## 📝 **样式改造规范**
 
 ### 现有组件样式改造
+
 ```tsx
 // 改造前：现有组件
 const ExistingButton = ({ children, ...props }) => {
   return (
-    <button 
-      style={{ 
-        backgroundColor: '#ddd', 
+    <button
+      style={{
+        backgroundColor: '#ddd',
         padding: '8px 16px',
-        borderRadius: '4px'
+        borderRadius: '4px',
       }}
       {...props}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
 // 改造后：匹配 Figma 设计
 const ExistingButton = ({ children, ...props }) => {
   return (
-    <button 
-      className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90"
-      {...props}
-    >
+    <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2" {...props}>
       {children}
     </button>
-  )
-}
+  );
+};
 ```
 
 ### 现有页面布局改造
+
 ```tsx
 // 改造前：内联样式
 <div style={{ display: 'flex', gap: '16px', padding: '20px' }}>
@@ -114,18 +118,15 @@ const ExistingButton = ({ children, ...props }) => {
 ```
 
 ### 仅在必要时创建新组件
+
 ```tsx
 // ⚠️ 仅当现有组件设计不合理无法还原时才创建新组件
 // 例如：现有组件结构过于复杂，无法通过样式修改匹配 Figma 设计
 
 // 现有组件改造失败的情况下，才考虑重构或新建
 export const RefactoredCard = ({ children }) => {
-  return (
-    <div className="rounded-lg border border-border bg-card text-card-foreground shadow-sm p-6">
-      {children}
-    </div>
-  )
-}
+  return <div className="border-border bg-card text-card-foreground rounded-lg border p-6 shadow-sm">{children}</div>;
+};
 ```
 
 ## ✅ **完成检查清单**
@@ -138,7 +139,6 @@ export const RefactoredCard = ({ children }) => {
 - [ ] 没有导入新的图标库，使用 Figma 提供的资产
 - [ ] 仅在现有组件无法改造时才考虑新建组件
 - [ ] 响应式设计在移动端正常工作
-
 
 ## 现有组件还原工作流程
 
@@ -160,7 +160,7 @@ export const RefactoredCard = ({ children }) => {
 
 1. **获取数据**: 使用 Figma MCP 获取设计数据和资源
 2. **现有代码分析**: 识别需要改造的现有组件和页面
-3. **样式差异对比**: Figma 设计 vs 现有实现的视觉差异  
+3. **样式差异对比**: Figma 设计 vs 现有实现的视觉差异
 4. **样式改造**: 修改现有组件样式，移除内联样式，使用 Tailwind 类
 5. **颜色映射**: 将 Figma 颜色映射到现有 Tailwind 设计令牌，优先使用 figma 设计稿中的颜色
 6. **资产处理**: 开发时使用 localhost 源，生产时本地化资产文件
@@ -168,6 +168,7 @@ export const RefactoredCard = ({ children }) => {
 8. **组件重构**: 仅在现有组件设计不合理无法还原时才考虑新建
 
 ## 原则
+
 关注细节、边、阴影、hover、active 等状态，确保视觉效果与 Figma 设计稿一致。
 需要考虑原始组件所基于的技术栈及其特性，考虑周全之后再开始改造。
 

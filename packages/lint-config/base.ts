@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
-// import onlyWarn from 'eslint-plugin-only-warn'; 
+// import onlyWarn from 'eslint-plugin-only-warn';
 import type { FlatConfig } from '@typescript-eslint/utils/ts-eslint';
 
 import gitignore from 'eslint-config-flat-gitignore';

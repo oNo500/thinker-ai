@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden px-4 pb-20 pt-32">
       <AnimatedBackground />
-      <div className="mx-auto max-w-6xl text-center pb-[50px]">
+      <div className="mx-auto max-w-6xl pb-[50px] text-center">
         <div className="mb-8">
           <div className="mb-6 flex justify-center">
             <GradientThinkerTitle />
@@ -18,7 +18,7 @@ const Hero = () => {
           </h1>
           <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-600">AI 驱动的全形态知识智能管理平台</p>
           <div className="relative pb-[100px]">
-            <div className='absolute left-1/2 bottom-0 -translate-x-[50%] -translate-y-[50px] h-[200px]'>
+            <div className="absolute bottom-0 left-1/2 h-[200px] -translate-x-[50%] -translate-y-[50px]">
               <SpotlightTextMask />
             </div>
           </div>

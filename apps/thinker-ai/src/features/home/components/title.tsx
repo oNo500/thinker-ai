@@ -19,7 +19,7 @@ export const Title = ({ title, subtitle, description }: TitleProps) => {
           {subtitle}
         </span>
       </div>
-      <div className="mt-8 text-xl text-black text-center">{description}</div>
+      <div className="mt-8 text-center text-xl text-black">{description}</div>
     </div>
   );
 };

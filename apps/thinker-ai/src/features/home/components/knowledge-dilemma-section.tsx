@@ -9,7 +9,7 @@ const KnowledgeDilemmaSection = () => {
       style={{
         background: '#F7F9FB',
       }}
-      className="bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 px-4 py-30 text-center"
+      className="py-30 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 px-4 text-center"
     >
       <Title title="信息时代的" subtitle="知识管理困境" description="现代知识工作者面临着前所未有的信息管理挑战" />
 
@@ -25,7 +25,7 @@ const KnowledgeDilemmaSection = () => {
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-22 flex max-w-[1705px] flex-row justify-between gap-[28px]">
+      <div className="mt-22 mx-auto flex max-w-[1705px] flex-row justify-between gap-[28px]">
         {CARD_LIST.map((item, index) => (
           <div
             key={index}

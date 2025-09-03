@@ -1,4 +1,3 @@
-
 # React Boilerplate
 
 A complete toolkit for modern React development, providing a production-ready application architecture.
