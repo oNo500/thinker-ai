@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 
+import { mockJump } from '@/lib/mock-jump';
+
 const NAV_LIST = [
   {
     name: '首页',
@@ -42,8 +44,8 @@ export default function Navbar() {
                   y2="29.3121"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#6E6BEE" />
-                  <stop offset="1" stop-color="#AFAED0" />
+                  <stop stopColor="#6E6BEE" />
+                  <stop offset="1" stopColor="#AFAED0" />
                 </linearGradient>
               </defs>
             </svg>
@@ -64,7 +66,10 @@ export default function Navbar() {
             <div className="flex items-center justify-center">
               <Search className="h-5 w-5 text-gray-600" />
             </div>
-            <div className="flex h-[43px] items-center justify-center rounded-[5px] bg-[#000000] px-6 py-[3px] text-white">
+            <div
+              onClick={mockJump}
+              className="flex h-[43px] items-center justify-center rounded-[5px] bg-[#000000] px-6 py-[3px] text-white"
+            >
               登录
             </div>
           </div>

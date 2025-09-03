@@ -975,20 +975,28 @@ const Carousel = () => {
 
 const STEP_LIST = [
   {
-    title: '导入内容',
+    title: '知识采集',
     description: 'PDF、网页、笔记',
   },
   {
-    title: '智能标注',
-    description: '高亮重点信息',
+    title: '知识入仓',
+    description: 'AI预筛去重',
   },
   {
-    title: '可视化组织',
-    description: '构建知识网络',
+    title: '知识交互',
+    description: '划词关联、AI问答',
   },
   {
-    title: 'AI 洞察',
-    description: '发现新的连接',
+    title: '知识沉淀',
+    description: '个性化知识仓库',
+  },
+  {
+    title: '场景自动化',
+    description: 'Agent、MCP自动化',
+  },
+  {
+    title: '知识闭环',
+    description: '知识复制',
   },
 ];
 // 无缝集成的工作流 step 组件

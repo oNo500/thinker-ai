@@ -5,8 +5,8 @@ import { AppProviders } from '@/components/providers';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'React Boilerplate',
-  description: 'A complete toolkit for modern React development, production-ready application architecture',
+  title: 'ThinkerAI',
+  description: '',
 };
 
 export default function RootLayout({

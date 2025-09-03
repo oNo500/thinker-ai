@@ -1,4 +1,7 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
+import { mockJump } from '@/lib/mock-jump';
 import { cn } from '@/lib/utils';
 
 interface FreeButtonProps {
@@ -8,6 +11,7 @@ interface FreeButtonProps {
 export const FreeButton = ({ className }: FreeButtonProps) => {
   return (
     <Button
+      onClick={mockJump}
       size="lg"
       className={cn(
         'h-[55px] w-[188px] rounded-full bg-gray-900 !px-[25px] py-4 text-xl font-medium text-white hover:bg-gray-800',
