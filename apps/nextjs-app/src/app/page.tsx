@@ -11,6 +11,8 @@ import CoreFeaturesSection from '@/features/home/components/core-features-sectio
 import CTASection from '@/features/home/components/cta-section';
 import KnowledgeNetworkSection from '@/features/home/components/knowledge-network-section';
 import { queryClient } from '@/lib/query-client';
+import KnowledgeDilemmaSection from '@/features/home/components/knowledge-dilemma-section';
+import KnowledgeManagementPlatform from '@/features/home/components/knowledge-management-platform';
 
 const isLoggedIn = async () => {
   return !!(await cookies()).get('token')?.value;
@@ -23,6 +25,10 @@ export default async function Home() {
         <Navbar />
         <main className="relative">
           <Hero />
+          <KnowledgeDilemmaSection />
+
+          <KnowledgeManagementPlatform />
+
           <StatsSection />
           <FeaturesSection />
           <WorkflowSection />

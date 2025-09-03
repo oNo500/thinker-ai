@@ -17,9 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link href="https://db.onlinewebfonts.com/c/782fa124dcc01bb095ba97f0290dde2b?family=Alibaba-PuHuiTi-M" rel="stylesheet" />
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <link
+          href="https://db.onlinewebfonts.com/c/782fa124dcc01bb095ba97f0290dde2b?family=Alibaba-PuHuiTi-M"
+          rel="stylesheet"
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             @font-face {
               font-family: "Alibaba-PuHuiTi-M";
               src: url("https://db.onlinewebfonts.com/t/782fa124dcc01bb095ba97f0290dde2b.eot");
@@ -29,8 +33,9 @@ export default function RootLayout({
               url("https://db.onlinewebfonts.com/t/782fa124dcc01bb095ba97f0290dde2b.ttf")format("truetype"),
               url("https://db.onlinewebfonts.com/t/782fa124dcc01bb095ba97f0290dde2b.svg#Alibaba-PuHuiTi-M")format("svg");
             }
-          `
-        }} />
+          `,
+          }}
+        />
       </head>
       <body className={`antialiased`}>
         <AppProviders>{children}</AppProviders>
