@@ -13,6 +13,7 @@ import KnowledgeNetworkSection from '@/features/home/components/knowledge-networ
 import { queryClient } from '@/lib/query-client';
 import KnowledgeDilemmaSection from '@/features/home/components/knowledge-dilemma-section';
 import KnowledgeManagementPlatform from '@/features/home/components/knowledge-management-platform';
+import CoreFeatureExperience from '@/features/home/components/core-feature-experience';
 
 const isLoggedIn = async () => {
   return !!(await cookies()).get('token')?.value;
@@ -26,8 +27,8 @@ export default async function Home() {
         <main className="relative">
           <Hero />
           <KnowledgeDilemmaSection />
-
           <KnowledgeManagementPlatform />
+          <CoreFeatureExperience />
 
           <StatsSection />
           <FeaturesSection />

@@ -19,6 +19,7 @@ const KnowledgeManagementPlatform = () => {
                 <FreeButton className="mt-6" />
             </div>
             <Carousel />
+            <WorkflowStep />
         </section>
     );
 };
@@ -837,7 +838,7 @@ const Carousel = () => {
             <div className="flex items-center justify-center">
                 <div className="relative w-[1641px] flex items-end justify-center overflow-visible">
                     {/* 左侧高斯模糊遮罩 */}
-                    <div 
+                    <div
                         className="absolute left-0 top-0 w-[293px] h-full z-[60] pointer-events-none"
                         style={{
                             background: 'linear-gradient(to right, rgba(255,255,255,0.5) 0%, transparent 100%)',
@@ -845,9 +846,9 @@ const Carousel = () => {
                             WebkitBackdropFilter: 'blur(5px)',
                         }}
                     />
-                    
+
                     {/* 右侧高斯模糊遮罩 */}
-                    <div 
+                    <div
                         className="absolute right-0 top-0 w-[293px] h-full z-[60] pointer-events-none"
                         style={{
                             background: 'linear-gradient(to left, rgba(255,255,255,0.5) 0%, transparent 100%)',
@@ -948,6 +949,48 @@ const Carousel = () => {
             {/* 指示器：不要指示器，不要再添加了！！ */}
 
         </section>
+    );
+};
+
+const STEP_LIST = [
+    {
+        title: '导入内容',
+        description: 'PDF、网页、笔记'
+    },
+    {
+        title: '智能标注',
+        description: '高亮重点信息'
+    },
+    {
+        title: '可视化组织',
+        description: '构建知识网络'
+    },
+    {
+        title: 'AI 洞察',
+        description: '发现新的连接'
+    }
+]
+// 无缝集成的工作流 step 组件
+const WorkflowStep = () => {
+    return (
+        <div className='w-[1412px] m-auto'>
+            <h4 className=' text-[38px] font-[700] text-center'>无缝集成的工作流程</h4>
+            <p className=' text-[20px] text-center'>从阅读到思考，从记录到创作，一站式完成所有知识工作</p>
+            <div className='flex flex-row w-full gap-3 '>
+                {STEP_LIST.map((item, index) => (
+                    <div key={index} className="flex flex-col gap-[25px] w-1/4">
+                        <div className='flex items-center'>
+                            <span className='bg-[#6E6BEE] h-[30px] w-[30px] rounded-full flex items-center justify-center text-[18px] font-semibold  text-white'>{index + 1}</span>
+                            <span style={{
+                                background: 'linear-gradient(90deg, #6E6BEE 0%, rgba(110, 107, 238, 0.00) 100%)'
+                            }} className='flex-1 h-[5px]' />
+                        </div>
+                        <h5 className='text-[20px] font-medium'>{item.title}</h5>
+                        <p className={'text-[15px] text-[#848484]'}>{item.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 
