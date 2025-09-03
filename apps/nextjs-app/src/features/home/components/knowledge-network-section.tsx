@@ -1,79 +1,138 @@
-import { Button } from '@/components/ui/button';
 
-const img202508151114408831 = 'http://localhost:3845/assets/3b7e743dd1ebb73987bcc394c0403663975cd11c.png';
+import bgUrl from '../assets/images/bg.jpg'
+import Footer from './footer';
+import { Title } from './title';
+const LIST = [
+  {
+    icon: <svg width="46" height="49" viewBox="0 0 46 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_209_1452)">
+        <path d="M23.248 21.0122C21.2589 21.0122 19.3513 20.222 17.9447 18.8155C16.5382 17.409 15.748 15.5013 15.748 13.5122C15.748 11.5231 16.5382 9.61543 17.9447 8.20891C19.3513 6.80238 21.2589 6.01221 23.248 6.01221C25.2372 6.01221 27.1448 6.80238 28.5513 8.20891C29.9579 9.61543 30.748 11.5231 30.748 13.5122C30.748 15.5013 29.9579 17.409 28.5513 18.8155C27.1448 20.222 25.2372 21.0122 23.248 21.0122ZM23.248 9.01221C20.758 9.01221 18.748 11.0222 18.748 13.5122C18.748 16.0022 20.758 18.0122 23.248 18.0122C25.738 18.0122 27.748 16.0022 27.748 13.5122C27.748 11.0222 25.738 9.01221 23.248 9.01221Z" fill="#979797" />
+        <path d="M41.248 33.0122C40.408 33.0122 39.748 32.3522 39.748 31.5122C39.748 30.6722 40.408 30.0122 41.248 30.0122C42.088 30.0122 42.748 29.3522 42.748 28.5122C42.748 26.5231 41.9579 24.6154 40.5513 23.2089C39.1448 21.8024 37.2372 21.0122 35.248 21.0122H32.248C31.408 21.0122 30.748 20.3522 30.748 19.5122C30.748 18.6722 31.408 18.0122 32.248 18.0122C34.738 18.0122 36.748 16.0022 36.748 13.5122C36.748 11.0222 34.738 9.01221 32.248 9.01221C31.408 9.01221 30.748 8.35221 30.748 7.51221C30.748 6.67221 31.408 6.01221 32.248 6.01221C34.2372 6.01221 36.1448 6.80238 37.5513 8.20891C38.9579 9.61543 39.748 11.5231 39.748 13.5122C39.748 15.3722 39.088 17.0522 37.948 18.3722C42.418 19.5722 45.748 23.6522 45.748 28.5122C45.748 31.0022 43.738 33.0122 41.248 33.0122ZM5.24805 33.0122C2.75805 33.0122 0.748047 31.0022 0.748047 28.5122C0.748047 23.6522 4.04805 19.5722 8.54805 18.3722C7.43805 17.0522 6.74805 15.3722 6.74805 13.5122C6.74805 11.5231 7.53822 9.61543 8.94475 8.20891C10.3513 6.80238 12.2589 6.01221 14.248 6.01221C15.088 6.01221 15.748 6.67221 15.748 7.51221C15.748 8.35221 15.088 9.01221 14.248 9.01221C11.758 9.01221 9.74805 11.0222 9.74805 13.5122C9.74805 16.0022 11.758 18.0122 14.248 18.0122C15.088 18.0122 15.748 18.6722 15.748 19.5122C15.748 20.3522 15.088 21.0122 14.248 21.0122H11.248C9.25892 21.0122 7.35127 21.8024 5.94475 23.2089C4.53822 24.6154 3.74805 26.5231 3.74805 28.5122C3.74805 29.3522 4.40805 30.0122 5.24805 30.0122C6.08805 30.0122 6.74805 30.6722 6.74805 31.5122C6.74805 32.3522 6.08805 33.0122 5.24805 33.0122ZM32.248 42.0122H14.248C11.758 42.0122 9.74805 40.0022 9.74805 37.5122V34.5122C9.74805 28.7222 14.458 24.0122 20.248 24.0122H26.248C32.038 24.0122 36.748 28.7222 36.748 34.5122V37.5122C36.748 40.0022 34.738 42.0122 32.248 42.0122ZM20.248 27.0122C18.2589 27.0122 16.3513 27.8024 14.9447 29.2089C13.5382 30.6154 12.748 32.5231 12.748 34.5122V37.5122C12.748 38.3522 13.408 39.0122 14.248 39.0122H32.248C33.088 39.0122 33.748 38.3522 33.748 37.5122V34.5122C33.748 32.5231 32.9579 30.6154 31.5513 29.2089C30.1448 27.8024 28.2372 27.0122 26.248 27.0122H20.248Z" fill="#979797" />
+      </g>
+      <defs>
+        <clipPath id="clip0_209_1452">
+          <rect width="45" height="48" fill="white" transform="translate(0.748047 0.012207)" />
+        </clipPath>
+      </defs>
+    </svg>
+    ,
+    title: '1000+',
+    description: '活跃用户'
+  },
+  {
+    icon: <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21.245 3.0127C19.6537 3.0127 18.1276 3.64484 17.0024 4.77005C15.8772 5.89527 15.245 7.4214 15.245 9.0127V33.0127C15.245 34.604 15.8772 36.1301 17.0024 37.2553C18.1276 38.3806 19.6537 39.0127 21.245 39.0127H36.248C37.8393 39.0127 39.3655 38.3806 40.4907 37.2553C41.6159 36.1301 42.248 34.604 42.248 33.0127V16.5127H42.242V13.2547C42.2418 12.0621 41.7681 10.9183 40.925 10.0747L35.183 4.3297C34.3395 3.48664 33.1957 3.01295 32.003 3.0127H21.245ZM36.248 36.0127H21.245C20.4494 36.0127 19.6863 35.6966 19.1237 35.134C18.5611 34.5714 18.245 33.8083 18.245 33.0127V9.0127C18.245 8.21705 18.5611 7.45398 19.1237 6.89137C19.6863 6.32877 20.4494 6.0127 21.245 6.0127H30.245V10.5127C30.245 11.7062 30.7192 12.8508 31.5631 13.6947C32.407 14.5386 33.5516 15.0127 34.745 15.0127H39.245V18.1957H39.248V33.0127C39.248 33.8083 38.932 34.5714 38.3694 35.134C37.8068 35.6966 37.0437 36.0127 36.248 36.0127ZM38.621 12.0127H34.742C34.3442 12.0127 33.9627 11.8547 33.6814 11.5734C33.4001 11.2921 33.242 10.9105 33.242 10.5127V6.6337L38.621 12.0127ZM9.24805 12.0127C9.24805 11.217 9.56412 10.454 10.1267 9.89137C10.6893 9.32877 11.4524 9.0127 12.248 9.0127V33.0127C12.248 35.3996 13.1963 37.6888 14.8841 39.3767C16.5719 41.0645 18.8611 42.0127 21.248 42.0127H36.248C36.248 42.8083 35.932 43.5714 35.3694 44.134C34.8068 44.6966 34.0437 45.0127 33.248 45.0127H20.618C17.6025 45.0127 14.7105 43.8148 12.5782 41.6825C10.446 39.5502 9.24805 36.6582 9.24805 33.6427V12.0127Z" fill="#979797" />
+    </svg>
+    ,
+    title: '500万+',
+    description: '处理文档'
+  },
+  {
+    icon: <svg width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M37.7342 28.0837C37.1131 33.2559 33.7254 35.3227 32.2623 36.8229C30.797 38.3276 31.0595 38.6272 31.1579 40.8339C31.1743 41.1069 31.1347 41.3804 31.0414 41.6375C30.9481 41.8946 30.8031 42.1299 30.6154 42.3289C30.4277 42.5278 30.2013 42.6862 29.9501 42.7943C29.6988 42.9024 29.4281 42.958 29.1546 42.9575H23.3416C23.0682 42.957 22.7979 42.9008 22.547 42.7924C22.2961 42.684 22.0699 42.5256 21.8822 42.3269C21.6945 42.1282 21.5493 41.8933 21.4554 41.6366C21.3615 41.3799 21.3209 41.1068 21.3361 40.8339C21.3361 38.6688 21.5373 38.1658 20.2338 36.8229C18.5717 35.1608 14.6614 32.8142 14.6614 26.3603C14.6514 24.7573 14.9736 23.1695 15.6077 21.6971C16.2418 20.2248 17.1741 18.8997 18.3457 17.8055C19.5173 16.7114 20.9029 15.8718 22.4151 15.3396C23.9273 14.8075 25.5334 14.5945 27.132 14.7139C28.7307 14.8333 30.2873 15.2826 31.7037 16.0334C33.1201 16.7843 34.3655 17.8204 35.3616 19.0765C36.3577 20.3326 37.0828 21.7814 37.4911 23.3316C37.8995 24.8819 37.9822 26.4999 37.7342 28.0837Z" stroke="#979797" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M22.8802 42.8369V46.1437C22.8802 47.0469 23.3832 47.7883 24.0021 47.7883H28.4921C29.1154 47.7883 29.6162 47.0447 29.6162 46.1437V42.8369M24.5423 19.786C23.251 19.7865 22.0127 20.2999 21.0998 21.2133C20.1869 22.1266 19.6741 23.3651 19.6741 24.6564M42.2833 26.8019H46.2942M38.2461 13.6536L41.0914 10.8083M40.4331 37.9468L43.2784 40.7899M26.2482 5.96631V9.20963M11.4641 10.8061L14.2897 13.6536M9.27708 40.7899L12.1027 37.9468M10.2131 26.8019H6.20435" stroke="#979797" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    ,
+    title: '99.9%',
+    description: '服务可用性'
+  },
+  {
+    icon: <svg width="53" height="52" viewBox="0 0 53 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M26.2479 6.57227L21.1719 19.0139L7.7583 20.0075L18.0399 28.6907L14.8215 41.7371L26.2479 34.6523M26.2479 6.57227L31.3239 19.0139L44.7375 20.0075L34.4559 28.6907L37.6743 41.7371L26.2479 34.6523" stroke="#979797" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    ,
+    title: '4.9',
+    description: '用户评分'
 
+  }
+]
+const LIST2 = [
+  '无限画布和节点创建',
+  '富文本编辑器',
+  'AI 智能对话和分析',
+  '项目和标签管理',
+  'PDF 在线阅读和标注',
+  '云端同步和备份'
+]
 const KnowledgeNetworkSection = () => {
   return (
-    <section className="relative overflow-hidden py-20">
-      {/* Background Image */}
-      <div
-        className="bg-size-[100%_139.89%] absolute inset-0 bg-[0%_28.66%] bg-no-repeat opacity-70"
-        style={{ backgroundImage: `url('${img202508151114408831}')` }}
-        data-node-id="162:2710"
-      />
-
-      {/* Main Content */}
-      <div className="relative z-10">
-        <div className="mx-auto max-w-7xl px-8">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
-            {/* Left Content */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="mb-6 text-4xl font-bold text-gray-900 lg:text-5xl">
-                  开始构建你的<span className="text-blue-600">知识网络</span>
-                </h2>
-                <p className="mb-8 text-lg text-gray-600">加入数万名知识工作者，体验全新的思考和创作方式</p>
+    <section className="relative overflow-hidden pt-20 w-full bg-[#F7F9FB] flex flex-col justify-center items-center">
+      {
+        <div className='flex flex-row justify-between w-[1140px] m-auto'>{
+          LIST.map((item, index) => {
+            return (<div key={index} className='flex flex-col justify-center items-center'>
+              <div className="w-[66px] h-[66px] bg-[#E4E6F9] flex justify-center items-center rounded-[10px]">
+                {item.icon}
               </div>
+              <div className="font-bold text-[25px] pt-[20px] pb-[2px]">{item.title}</div>
+              <div className="text-[15px] text-[#848484]">{item.description}</div>
+            </div>)
+          })
+        }</div>
+      }
+      <div className='py-[150px] w-full' style={{
+        background: `url(${bgUrl.src}) no-repeat center / cover`
 
-              {/* Feature List */}
-              <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>无限画布和笔记创建</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>富文本编辑器</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>AI 智能分析和分析</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>项目和知识管理</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>PDF 在线阅读和标注</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="h-2 w-2 rounded-full bg-gray-900"></div>
-                  <span>云端同步和备份</span>
-                </div>
-              </div>
+      }}>
+        <div className='flex flex-row justify-between gap-[183px] m-auto w-[1700px]'>
+          <div className='w-1/2 py-[50px] flex flex-col items-center'>
+            <div>
+              <h2 className='text-[48px] font-bold'>开始构建你的  <span
+                style={{
+                  background: 'linear-gradient(90deg, #9B99FF 0%, #504DD1 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                知识网络
+              </span></h2>
+              <p className='mt-[20px] text-xl tracking-wide'>加入数万名知识工作者，体验全新的思考和创作方式</p>
             </div>
-
-            {/* Right Content - Signup Form */}
-            <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-              <h3 className="mb-2 text-center text-2xl font-bold">立即免费注册</h3>
-              <p className="mb-8 text-center text-blue-500">无需信用卡，30天免费试用</p>
-
-              <div className="space-y-4">
-                <input
-                  type="email"
-                  placeholder="输入您的邮箱地址"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                />
-
-                <Button className="flex w-full items-center justify-center space-x-2 rounded-lg bg-black py-3 font-medium text-white hover:bg-gray-800">
-                  <span>开始构建知识网络</span>
-                  <span>→</span>
-                </Button>
+            <div className='mt-24 w-[482px] grid grid-cols-2 gap-x-[87px] gap-y-[10px]'>
+              {
+                LIST2.map((item, index) => {
+                  return (
+                    <div key={index} className='text-[15px] text-[#000] flex flex-row items-center gap-2'><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.167 17.6167C14.5854 17.6167 18.167 14.0351 18.167 9.6167C18.167 5.1983 14.5854 1.6167 10.167 1.6167C5.74859 1.6167 2.16699 5.1983 2.16699 9.6167C2.16699 14.0351 5.74859 17.6167 10.167 17.6167ZM14.4638 7.0847C14.5012 7.04614 14.5305 7.00044 14.5499 6.95033C14.5692 6.90021 14.5783 6.8467 14.5766 6.793C14.5748 6.7393 14.5622 6.6865 14.5396 6.63775C14.517 6.58901 14.4848 6.54532 14.4449 6.5093C14.4051 6.47328 14.3584 6.44565 14.3076 6.42808C14.2568 6.41051 14.203 6.40335 14.1494 6.40703C14.0958 6.41071 14.0435 6.42515 13.9956 6.44949C13.9477 6.47383 13.9052 6.50757 13.8706 6.5487L9.07899 11.8435L6.44299 9.3271C6.36629 9.25379 6.26361 9.21396 6.15754 9.21636C6.05147 9.21876 5.9507 9.2632 5.87739 9.3399C5.80409 9.4166 5.76425 9.51928 5.76665 9.62535C5.76905 9.73142 5.81349 9.83219 5.89019 9.9055L8.82379 12.7055L9.12099 12.9895L9.39659 12.6847L14.4638 7.0847Z" fill="black" />
+                    </svg>
+                      {item}
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
+          <div className=' w-1/2'>
+            <div className=' bg-white/85 w-[964px] h-[455px] flex flex-col justify-between items-center py-[62px] rounded-[35px]'>
+              <h2 className='text-[38px] font-black'>立即免费注册</h2>
+              <p style={{
+                background: 'linear-gradient(90deg, #9B99FF 0%, #504DD1 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>无需信用卡，30天免费试用</p>
+              <div className='flex flex-row w-[616px] items-center gap-2 border border-[#979797]/50 rounded-full p-4'>
+                <svg width="29" height="26" viewBox="0 0 29 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.6288 12.8096C22.6288 17.1772 18.7932 20.7178 14.0616 20.7178C9.33006 20.7178 5.49438 17.1772 5.49438 12.8096C5.49438 8.442 9.33006 4.90137 14.0616 4.90137C18.7932 4.90137 22.6288 8.442 22.6288 12.8096Z" stroke="#979797" stroke-width="1.37076" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M20.2222 18.5244L23.7406 21.7722" stroke="#979797" stroke-width="1.37076" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <input placeholder='请输入你的邮箱地址' className='outline-none border-none bg-transparent' />
+              </div>
+              <div className='flex flex-row rounded-full bg-black gap-6 text-white items-center pl-[40px] w-fit p-[5px]'>
+                开始构建知识网络
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="44" viewBox="0 0 43 44" fill="none">
+                    <path d="M0.0976562 22.0638C0.0976562 33.9103 9.70115 43.5138 21.5477 43.5138C33.3942 43.5138 42.9977 33.9103 42.9977 22.0638C42.9977 10.2173 33.3942 0.61377 21.5477 0.61377C9.70115 0.61377 0.0976562 10.2173 0.0976562 22.0638ZM22.5809 13.197C23.2253 12.5527 24.27 12.5527 24.9144 13.197L32.6144 20.897C32.9238 21.2065 33.0977 21.6262 33.0977 22.0638C33.0977 22.5014 32.9238 22.9211 32.6144 23.2305L24.9144 30.9305C24.27 31.5749 23.2253 31.5749 22.5809 30.9305C21.9366 30.2861 21.9366 29.2414 22.5809 28.597L27.4642 23.7138L11.6477 23.7138C10.7364 23.7138 9.99766 22.975 9.99766 22.0638C9.99766 21.1525 10.7364 20.4138 11.6477 20.4138L27.4642 20.4138L22.5809 15.5305C21.9366 14.8861 21.9366 13.8414 22.5809 13.197Z" fill="white" />
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className='w-[1604px]'>
+        <Footer />
       </div>
     </section>
   );

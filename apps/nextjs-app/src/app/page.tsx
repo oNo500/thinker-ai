@@ -29,13 +29,6 @@ export default async function Home() {
           <KnowledgeDilemmaSection />
           <KnowledgeManagementPlatform />
           <CoreFeatureExperience />
-
-          <StatsSection />
-          <FeaturesSection />
-          <WorkflowSection />
-          <TechStackSection />
-          <CoreFeaturesSection />
-          <CTASection />
           <KnowledgeNetworkSection />
         </main>
       </div>
