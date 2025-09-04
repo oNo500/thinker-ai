@@ -187,7 +187,7 @@ const CoreFeatureExperience: React.FC = () => {
                       ))}
                     </ul>
                     <div>
-                      <FreeButton />
+                      {/* <FreeButton /> */}
                     </div>
                   </div>
                   <div>
