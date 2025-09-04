@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { PDF_PRD_URL } from '@/lib/constant';
 
@@ -805,6 +805,15 @@ const DATA_LIST = [
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalItems = DATA_LIST.length;
+
+  // 自动轮播功能
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalItems);
+    }, 2000); // 每2秒切换一次
+
+    return () => clearInterval(interval); // 清理定时器
+  }, [totalItems]);
 
   const getVisibleItems = () => {
     const items = [];
