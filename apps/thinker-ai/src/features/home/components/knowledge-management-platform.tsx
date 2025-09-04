@@ -2,13 +2,14 @@
 import { useState, useEffect } from 'react';
 
 import { PDF_PRD_URL } from '@/lib/constant';
+import bg2 from '../assets/images/bg2.png';
 
 import { Title } from './title';
 import { FreeButton } from './free-button';
 
 const KnowledgeManagementPlatform = () => {
   return (
-    <section className="relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 px-4 py-24">
+    <section className="relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 px-0 py-24 pb-0">
       <div className="flex flex-col items-center justify-center pb-32">
         <Title
           title="一个平台，满足"
@@ -1011,29 +1012,34 @@ const STEP_LIST = [
 // 无缝集成的工作流 step 组件
 const WorkflowStep = () => {
   return (
-    <div className="m-auto mt-20 w-[1412px]">
-      <h4 className="text-center text-[38px] font-[700]">无缝集成的工作流程</h4>
-      <p className="py-[30px] text-center text-[20px]">从阅读到思考，从记录到创作，一站式完成所有知识工作</p>
-      <div className="mt-[80px] flex w-full flex-row gap-3">
-        {STEP_LIST.map((item, index) => (
-          <div key={index} className="flex w-1/4 flex-col gap-[25px]">
-            <div className="flex items-center">
-              <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#6E6BEE] text-[18px] font-semibold text-white">
-                {index + 1}
-              </span>
-              <span
-                style={{
-                  background: 'linear-gradient(90deg, #6E6BEE 0%, rgba(110, 107, 238, 0.00) 100%)',
-                }}
-                className="h-[5px] flex-1"
-              />
+    <div style={{
+      background: `url(${bg2.src}) no-repeat center / cover`,
+    }}>
+      <div className="m-auto mt-20 w-[1412px] pb-[100px] pt-[100px]" >
+        <h4 className="text-center text-[38px] font-[700]">无缝集成的工作流程</h4>
+        <p className="py-[30px] text-center text-[20px]">从阅读到思考，从记录到创作，一站式完成所有知识工作</p>
+        <div className="mt-[80px] flex w-full flex-row gap-3">
+          {STEP_LIST.map((item, index) => (
+            <div key={index} className="flex w-1/4 flex-col gap-[25px]">
+              <div className="flex items-center">
+                <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#6E6BEE] text-[18px] font-semibold text-white">
+                  {index + 1}
+                </span>
+                <span
+                  style={{
+                    background: 'linear-gradient(90deg, #6E6BEE 0%, rgba(110, 107, 238, 0.00) 100%)',
+                  }}
+                  className="h-[5px] flex-1"
+                />
+              </div>
+              <h5 className="text-[20px] font-medium">{item.title}</h5>
+              <p className={'text-[15px] text-[#848484]'}>{item.description}</p>
             </div>
-            <h5 className="text-[20px] font-medium">{item.title}</h5>
-            <p className={'text-[15px] text-[#848484]'}>{item.description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
+
   );
 };
 

@@ -20,7 +20,7 @@ import Image9 from '../assets/images/image9.png';
 import Image10 from '../assets/images/image10.png';
 
 const CoreFeatureExperience: React.FC = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const FEATURE_LIST = [
     {
       title: '多源引用式回答',
@@ -130,61 +130,74 @@ const CoreFeatureExperience: React.FC = () => {
     },
   ];
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-[#EFF1FF] pb-[900px] pt-[150px]">
-      {/* 核心功能深度体验组件 */}
-      <Title title="核心功能" subtitle="深度体验" description="每个功能都经过精心设计，为你的知识工作提供最佳体验" />
-      <div className="relative mt-[50px] flex w-[843px] flex-wrap justify-between gap-y-6">
-        {FEATURE_LIST.map((item, index) => {
-          return (
-            <div
-              key={index}
-              role="button"
-              tabIndex={0}
-              onClick={() => setActive(index)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  setActive(index);
-                }
-              }}
-              className={cn(
-                'flex h-[125px] w-[158px] cursor-pointer flex-col items-center justify-center rounded-[10px]',
-                {
-                  'bg-black text-white': active === index,
-                },
-              )}
-            >
-              <div className="flex flex-col items-center gap-4 font-medium">
-                {item.icon}
-                <p>{item.title}</p>
-              </div>
+
+    <div className='bg-[#F7F9FB]'>
+      <div className="flex w-full flex-col items-center justify-center  pt-[107px]">
+        {/* 核心功能深度体验组件 */}
+        <Title title="核心功能" subtitle="深度体验" description="每个功能都经过精心设计，为你的知识工作提供最佳体验" />
+        <div className="relative mt-[50px] flex w-[843px] flex-wrap justify-between gap-y-6">
+          {FEATURE_LIST.map((item, index) => {
+            return (
               <div
-                style={{
-                  zIndex: active === index ? 10 : 1,
-                }}
-                className="-bottom-22 -translate-1/2 absolute left-1/2 flex w-[1604px] translate-y-[100%] flex-nowrap justify-between rounded-[20px] bg-[#fff] p-[61px]"
+                key={index}
+                role="button"
+                tabIndex={0}
+
+                className={cn(
+                  'flex h-[125px] w-[158px] cursor-pointer flex-col items-center justify-center rounded-[10px]',
+                  {
+                    'bg-black text-white': active === index,
+                  },
+                )}
               >
-                <div className="flex w-[390px] flex-col justify-center gap-[30px]">
-                  <div className="text-[25px] font-bold leading-loose text-black">
-                    {item.subTitle.map((t) => (
-                      <p key={t}>{t}</p>
-                    ))}
-                  </div>
-                  <ul className="list-disc space-y-2 pl-6 text-[16px] leading-loose text-[#000]">
-                    {item.list.map((l) => (
-                      <li key={l}>{l}</li>
-                    ))}
-                  </ul>
-                  <div>
-                    <FreeButton />
-                  </div>
+                <div className="flex flex-col items-center gap-4 font-medium">
+                  {item.icon}
+                  <p>{item.title}</p>
                 </div>
-                <div>
-                  <Image className="w-[950px]" src={item.image} alt={item.title} />
-                </div>
+
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      </div>
+      <div className='mt-[60px]'>
+        <div className='flex flex-col items-center justify-center bg-[#fff]  w-[1604px] m-auto rounded-[20px]'>
+          {
+            FEATURE_LIST.map((item, index) => {
+              return (
+                <div
+                  style={{
+                    zIndex: active === index ? 10 : 1,
+                  }}
+                  className={cn('flex w-[1604px] flex-nowrap justify-between p-[61px] pt-[30px] pb-[0px]', (index % 2 === 1) ? 'flex-row-reverse' : 'flex-row',)}
+                >
+                  <div className={
+                    cn('flex w-[390px] justify-center gap-[30px] flex-col',
+
+                    )
+                  }>
+                    <div className="text-[25px] font-bold leading-loose text-black">
+                      {item.subTitle.map((t) => (
+                        <p key={t}>{t}</p>
+                      ))}
+                    </div>
+                    <ul className="list-disc space-y-2 pl-6 text-[16px] leading-loose text-[#000]">
+                      {item.list.map((l) => (
+                        <li key={l}>{l}</li>
+                      ))}
+                    </ul>
+                    <div>
+                      <FreeButton />
+                    </div>
+                  </div>
+                  <div>
+                    <Image className="w-[950px]" src={item.image} alt={item.title} />
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div >
       </div>
     </div>
   );
