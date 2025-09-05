@@ -29,7 +29,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the WXT and React logos to learn more
-        <Button color='primary'>Click me1</Button>
+        <Button className=' text-xs'  color='primary'>Click me1</Button>
       </p>
     </>
   );
