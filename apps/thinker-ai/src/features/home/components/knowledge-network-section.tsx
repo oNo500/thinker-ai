@@ -1,6 +1,9 @@
+'use client';
+
 import bgUrl from '../assets/images/bg.jpg';
 import Footer from './footer';
-import { Title } from './title';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const LIST = [
   {
@@ -23,7 +26,7 @@ const LIST = [
         </defs>
       </svg>
     ),
-    title: '1000+',
+    title: '20000+',
     description: '活跃用户',
   },
   {
@@ -85,6 +88,7 @@ const LIST2 = [
   '云端同步和备份',
 ];
 const KnowledgeNetworkSection = () => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <section className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-[#F7F9FB] pt-20">
       {
@@ -176,16 +180,19 @@ const KnowledgeNetworkSection = () => {
                 </svg>
                 <input placeholder="请输入你的邮箱地址" className="border-none bg-transparent outline-none" />
               </div>
-              <div className="flex w-fit flex-row items-center gap-6 rounded-full bg-black p-[5px] pl-[40px] text-white">
-                开始构建知识网络
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="43" height="44" viewBox="0 0 43 44" fill="none">
-                    <path
-                      d="M0.0976562 22.0638C0.0976562 33.9103 9.70115 43.5138 21.5477 43.5138C33.3942 43.5138 42.9977 33.9103 42.9977 22.0638C42.9977 10.2173 33.3942 0.61377 21.5477 0.61377C9.70115 0.61377 0.0976562 10.2173 0.0976562 22.0638ZM22.5809 13.197C23.2253 12.5527 24.27 12.5527 24.9144 13.197L32.6144 20.897C32.9238 21.2065 33.0977 21.6262 33.0977 22.0638C33.0977 22.5014 32.9238 22.9211 32.6144 23.2305L24.9144 30.9305C24.27 31.5749 23.2253 31.5749 22.5809 30.9305C21.9366 30.2861 21.9366 29.2414 22.5809 28.597L27.4642 23.7138L11.6477 23.7138C10.7364 23.7138 9.99766 22.975 9.99766 22.0638C9.99766 21.1525 10.7364 20.4138 11.6477 20.4138L27.4642 20.4138L22.5809 15.5305C21.9366 14.8861 21.9366 13.8414 22.5809 13.197Z"
-                      fill="white"
-                    />
-                  </svg>
-                </span>
+              <div 
+                className="relative flex w-[230px] h-[55px] cursor-pointer flex-row items-center rounded-full bg-black text-white hover:bg-black"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <span className='absolute left-[28px]'>开始构建知识网络</span>
+                <Image
+                  src={isHovered ? "/Vector-hover.png" : "/Vector.png"}
+                  alt="Arrow icon"
+                  width={isHovered ? 61 : 43}
+                  height={isHovered ? 61 : 43}
+                  className={`absolute ${isHovered ? 'right-[-1px]' : 'right-[7.5px]'}`}
+                />
               </div>
             </div>
           </div>

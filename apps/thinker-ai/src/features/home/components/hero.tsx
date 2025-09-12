@@ -17,9 +17,15 @@ const Hero = () => {
               <GradientThinkerTitle />
             </div>
             <h1 className="mb-6 !text-[133px] font-bold leading-tight text-gray-900 md:text-6xl lg:text-7xl">
-              <TypewriterText texts={['构建知识网络']} speed={150} deleteSpeed={75} pauseDuration={3000} />
+              <TypewriterText 
+                texts={['构建知识网络', '释放思维潜能']} 
+                textStyles={['', 'bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent']}
+                speed={150} 
+                deleteSpeed={75} 
+                pauseDuration={3000} 
+              />
             </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-600">AI 驱动的全形态知识智能管理平台</p>
+            <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-600">将零散信息转化为可视化知识网络，AI助力深度思考</p>
             <div className="relative pb-[100px]">
               <div className="absolute bottom-0 left-1/2 h-[200px] -translate-x-[50%] -translate-y-[50px]">
                 <SpotlightTextMask />

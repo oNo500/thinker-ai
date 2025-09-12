@@ -14,7 +14,7 @@ const KnowledgeManagementPlatform = () => {
         <Title
           title="一个平台，满足"
           subtitle="所有知识管理需求"
-          description="现代知识工作者面临着前所未有的信息管理挑战"
+          description="ThinkerAl整合了现代知识工作者所需的全部功能，让思考和创作变得更加高效"
         />
         <FreeButton className="mt-6" />
       </div>

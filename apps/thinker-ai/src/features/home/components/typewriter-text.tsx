@@ -8,6 +8,7 @@ interface TypewriterTextProps {
   deleteSpeed?: number;
   pauseDuration?: number;
   className?: string;
+  textStyles?: string[];
 }
 
 const TypewriterText = ({
@@ -16,6 +17,7 @@ const TypewriterText = ({
   deleteSpeed = 50,
   pauseDuration = 2000,
   className = '',
+  textStyles = [],
 }: TypewriterTextProps) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
@@ -56,10 +58,12 @@ const TypewriterText = ({
     return () => clearTimeout(timeout);
   }, [currentText, currentTextIndex, isDeleting, isPaused, texts, speed, deleteSpeed, pauseDuration]);
 
+  const currentStyle = textStyles[currentTextIndex] || '';
+  
   return (
     <span className={className}>
-      {currentText}
-      <span className="inline-block -translate-y-2 animate-pulse align-baseline">|</span>
+      <span className={currentStyle}>{currentText}</span>
+      <span className={`inline-block -translate-y-2 animate-pulse align-baseline ${currentStyle}`}>|</span>
     </span>
   );
 };

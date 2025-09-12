@@ -11,7 +11,7 @@ const CTASection = () => {
   ];
 
   const stats = [
-    { label: '活跃用户', value: '10万+' },
+    { label: '活跃用户', value: '2万+' },
     { label: '知识条目', value: '500万+' },
     { label: '用户满意度', value: '98%' },
     { label: '数据安全', value: '100%' },

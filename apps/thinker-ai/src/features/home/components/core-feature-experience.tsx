@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 import { Title } from './title';
-import { FreeButton } from './free-button';
 import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10 } from '../assets/icons';
+import UserCommentsCarousel from '@/components/user-comments-carousel';
 import Image1 from '../assets/images/image1.png';
 import Image2 from '../assets/images/image2.png';
 import Image3 from '../assets/images/image3.png';
@@ -142,7 +142,12 @@ const CoreFeatureExperience: React.FC = () => {
                 key={index}
                 role="button"
                 tabIndex={0}
-
+                onClick={() => setActive(index)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setActive(index);
+                  }
+                }}
                 className={cn(
                   'flex h-[125px] w-[158px] cursor-pointer flex-col items-center justify-center rounded-[10px]',
                   {
@@ -198,6 +203,15 @@ const CoreFeatureExperience: React.FC = () => {
             })
           }
         </div >
+      </div>
+      
+      {/* 用户评论轮播区域 */}
+      <div className="pt-16 pb-8">
+        <div className="text-center mb-10">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">用户评价</h3>
+          <p className="text-gray-600">来看看用户们怎么说</p>
+        </div>
+        <UserCommentsCarousel />
       </div>
     </div>
   );

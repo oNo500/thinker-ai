@@ -1,9 +1,10 @@
-import { Button } from '@/components/ui/button';
+"use client";
 
-import { FreeButton } from './free-button';
+import { ShineBorder } from '@/components/magicui/shine-border';
 import { Title } from './title';
-
+import { useState } from 'react';
 const KnowledgeDilemmaSection = () => {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   return (
     <section
       style={{
@@ -13,26 +14,39 @@ const KnowledgeDilemmaSection = () => {
     >
       <Title title="信息时代的" subtitle="知识管理困境" description="现代知识工作者面临着前所未有的信息管理挑战" />
 
-      <FreeButton className="mt-16" />
-      <div className="mx-auto mt-20 flex max-w-[1240px] flex-row justify-between">
-        {DATA_LIST.map((item, index) => (
-          <div key={index} className="flex flex-row items-start gap-[25px] text-left">
-            {item.icon}
-            <div className="flex flex-col gap-[25px]">
-              <div className="text-[72px] font-extrabold leading-[80px]">{item.title}</div>
-              <div className="text-[15px]">{item.description}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-22 mx-auto flex max-w-[1705px] flex-row justify-between gap-[28px]">
+      <div className="卡片 mt-16 mx-auto flex max-w-[1705px] flex-row justify-between gap-[28px]">
         {CARD_LIST.map((item, index) => (
           <div
             key={index}
-            className="flex-1/4 flex flex-col flex-nowrap items-start gap-[25px] rounded-[20px] bg-white p-[25px] text-left text-[25px] font-medium"
+            className="relative flex flex-col flex-nowrap items-start gap-[25px] rounded-[20px] bg-white p-[25px] pr-0 text-left font-medium transition-all"
+            style={{
+              width: index === 0 ? '410px' : 
+                     index === 1 ? '370px' : 
+                     index === 2 ? '390px' : 
+                     index === 3 ? '350px' : '390px'
+            }}
+            onMouseEnter={() => setHoveredCard(index)}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            {item.title}
-            <span className="text-[15px] text-[#848484]">{item.description}</span>
+            {hoveredCard === index && (
+              <ShineBorder
+                borderWidth={1.5}
+                shineColor={["#6e6bee", "#a855f7", "#3b82f6"]}
+              />
+            )}
+            <div className='text-[25px]'>{item.title}</div>
+            <span className="text-[14px] text-[#848484]">{item.description}</span>
+          </div>
+        ))}
+      </div>
+      <div className="数字 mx-auto mt-20 flex max-w-[1240px] flex-row justify-between">
+        {DATA_LIST.map((item, index) => (
+          <div key={index} className="hover:bg-[#6E6BEE]/5 w-[356px] rounded-[20px] p-[25px] flex flex-col">
+            <div className="flex flex-row items-center justify-center gap-[25px]">
+              {item.icon}
+              <div className="text-[50px] font-extrabold leading-[80px]">{item.title}</div>
+            </div>
+            <div className="text-[18px] mt-[25px]">{item.description}</div>
           </div>
         ))}
       </div>
@@ -72,7 +86,7 @@ const DATA_LIST = [
       </svg>
     ),
     title: '73%',
-    description: '的知识工作者表示查找信息占用过多时间',
+    description: '知识工作者表示查找信息占用过多时间',
   },
   {
     icon: (
@@ -108,7 +122,7 @@ const DATA_LIST = [
       </svg>
     ),
     title: '40%',
-    description: '的创意想法因为记录分散而丢失',
+    description: '创意想法因为记录分散而丢失',
   },
   {
     icon: (
@@ -133,16 +147,20 @@ const CARD_LIST = [
     description: '重要信息分散在不同平台，查找困难，整理费时',
   },
   {
+    title: '信息孤岛效应',
+    description: '无法发现知识间的潜在联系，缺少深度洞察',
+  },
+  {
+    title: 'AI生态缺失',
+    description: '仅支持简单问答，无法针对不同内容深度处理',
+  },
+  {
     title: '想法缺乏关联',
     description: '零散的思考无法形成体系，创新思维受限',
   },
   {
     title: '工具切换频繁',
     description: '在多个应用间反复切换，时间浪费，效率低下',
-  },
-  {
-    title: '信息孤岛效应',
-    description: '无法发现知识间的潜在联系，缺少深度洞察',
   },
 ];
 

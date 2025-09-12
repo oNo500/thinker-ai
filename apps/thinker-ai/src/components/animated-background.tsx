@@ -60,28 +60,7 @@ export default function AnimatedBackground({ className = '' }: AnimatedBackgroun
       }
       
       .gradient-bg {
-        background: conic-gradient(
-          from 90deg,
-          rgba(110, 107, 238, 1) 0%,
-          rgba(96, 80, 235, 1) 6.25%,
-          rgba(82, 54, 233, 1) 12.5%,
-          rgba(67, 27, 230, 1) 18.75%,
-          rgba(60, 13, 229, 1) 21.875%,
-          rgba(53, 0, 228, 1) 25%,
-          rgba(66, 10, 223, 1) 26.472%,
-          rgba(78, 19, 218, 1) 27.945%,
-          rgba(104, 38, 209, 1) 30.889%,
-          rgba(129, 57, 200, 1) 33.834%,
-          rgba(154, 76, 191, 1) 36.779%,
-          rgba(205, 114, 172, 1) 42.668%,
-          rgba(255, 152, 154, 1) 48.558%,
-          rgba(192, 168, 204, 1) 61.779%,
-          rgba(129, 184, 255, 1) 75%,
-          rgba(120, 145, 247, 1) 87.5%,
-          rgba(110, 107, 238, 1) 100%
-        );
-        background-size: 200% 200%;
-        animation: gradient-shift 8s ease infinite;
+        background: rgba(255, 255, 255, 1);
       }
     `;
     document.head.appendChild(style);
@@ -141,16 +120,16 @@ export default function AnimatedBackground({ className = '' }: AnimatedBackgroun
       />
 
       {/* Particle grid */}
-      <div className="absolute inset-0">{particles}</div>
+      {/* <div className="absolute inset-0">{particles}</div> */}
 
       {/* Overlay with glassmorphism effect */}
-      <div
+      {/* <div
         className="absolute inset-0 backdrop-blur-sm"
         style={{
           background: 'rgba(255, 255, 255, 0.02)',
           backdropFilter: 'blur(20px)',
         }}
-      />
+      /> */}
     </div>
   );
 }
