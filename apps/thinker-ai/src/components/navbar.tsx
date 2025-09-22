@@ -66,12 +66,13 @@ export default function Navbar() {
             <div className="flex items-center justify-center">
               <Search className="h-5 w-5 text-gray-600" />
             </div>
-            <div
+            <button
+              type="button"
               onClick={mockJump}
               className="flex h-[43px] items-center justify-center rounded-[5px] bg-[#000000] px-6 py-[3px] text-white"
             >
               登录
-            </div>
+            </button>
           </div>
         </div>
       </div>

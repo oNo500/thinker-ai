@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import { cn } from '@/lib/utils';
-import VideoPlayer from '@/components/video-player';
-
-import { Title } from './title';
-import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10 } from '../assets/icons';
 import UserCommentsCarousel from '@/components/user-comments-carousel';
+import VideoPlayer from '@/components/video-player';
+import { cn } from '@/lib/utils';
+
+import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10 } from '../assets/icons';
+import { Title } from './title';
 import Image1 from '../assets/images/image1.png';
 import Image2 from '../assets/images/image2.png';
 import Image3 from '../assets/images/image3.png';
@@ -193,6 +193,7 @@ const CoreFeatureExperience: React.FC = () => {
           {FEATURE_LIST.map((item, index) => {
             return (
               <div
+                key={index}
                 style={{
                   zIndex: active === index ? 10 : 1,
                 }}

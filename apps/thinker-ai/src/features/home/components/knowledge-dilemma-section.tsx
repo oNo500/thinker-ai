@@ -1,8 +1,11 @@
-"use client";
+'use client';
+
+import { useState } from 'react';
 
 import { ShineBorder } from '@/components/magicui/shine-border';
+
 import { Title } from './title';
-import { useState } from 'react';
+
 const KnowledgeDilemmaSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   return (
@@ -14,39 +17,36 @@ const KnowledgeDilemmaSection = () => {
     >
       <Title title="信息时代的" subtitle="知识管理困境" description="现代知识工作者面临着前所未有的信息管理挑战" />
 
-      <div className="卡片 mt-16 mx-auto flex max-w-[1705px] flex-row justify-between gap-[28px]">
+      <div className="卡片 mx-auto mt-16 flex max-w-[1705px] flex-row justify-between gap-[28px]">
         {CARD_LIST.map((item, index) => (
           <div
             key={index}
             className="relative flex flex-col flex-nowrap items-start gap-[25px] rounded-[20px] bg-white p-[25px] pr-0 text-left font-medium transition-all"
             style={{
-              width: index === 0 ? '410px' : 
-                     index === 1 ? '370px' : 
-                     index === 2 ? '390px' : 
-                     index === 3 ? '350px' : '390px'
+              width:
+                index === 0 ? '410px' : index === 1 ? '370px' : index === 2 ? '390px' : index === 3 ? '350px' : '390px',
             }}
+            role="button"
+            tabIndex={0}
             onMouseEnter={() => setHoveredCard(index)}
             onMouseLeave={() => setHoveredCard(null)}
+            onFocus={() => setHoveredCard(index)}
+            onBlur={() => setHoveredCard(null)}
           >
-            {hoveredCard === index && (
-              <ShineBorder
-                borderWidth={1.5}
-                shineColor={["#6e6bee", "#a855f7", "#3b82f6"]}
-              />
-            )}
-            <div className='text-[25px]'>{item.title}</div>
+            {hoveredCard === index && <ShineBorder borderWidth={1.5} shineColor={['#6e6bee', '#a855f7', '#3b82f6']} />}
+            <div className="text-[25px]">{item.title}</div>
             <span className="text-[14px] text-[#848484]">{item.description}</span>
           </div>
         ))}
       </div>
       <div className="数字 mx-auto mt-20 flex max-w-[1240px] flex-row justify-between">
         {DATA_LIST.map((item, index) => (
-          <div key={index} className="hover:bg-[#6E6BEE]/5 w-[356px] rounded-[20px] p-[25px] flex flex-col">
+          <div key={index} className="flex w-[356px] flex-col rounded-[20px] p-[25px] hover:bg-[#6E6BEE]/5">
             <div className="flex flex-row items-center justify-center gap-[25px]">
               {item.icon}
               <div className="text-[50px] font-extrabold leading-[80px]">{item.title}</div>
             </div>
-            <div className="text-[18px] mt-[25px]">{item.description}</div>
+            <div className="mt-[25px] text-[18px]">{item.description}</div>
           </div>
         ))}
       </div>

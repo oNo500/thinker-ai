@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
+
 import { cn } from '@/lib/utils';
 
 interface VideoPlayerProps {
@@ -50,7 +51,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       {
         threshold,
         rootMargin: '50px', // 提前50px开始检测
-      }
+      },
     );
 
     observer.observe(container);
@@ -61,10 +62,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   }, [autoPlay, threshold]);
 
   return (
-    <div 
-      ref={containerRef}
-      className={cn('rounded-lg overflow-hidden', className)}
-    >
+    <div ref={containerRef} className={cn('overflow-hidden rounded-lg', className)}>
       <ReactPlayer
         src={src}
         playing={shouldPlay}
@@ -74,9 +72,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         playsInline={playsInline}
         width={width}
         height={height}
-        style={{ 
+        style={{
           borderRadius: '8px',
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       />
     </div>

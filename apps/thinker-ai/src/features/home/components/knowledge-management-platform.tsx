@@ -1,23 +1,23 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { PDF_PRD_URL } from '@/lib/constant';
+
 import bg2 from '../assets/images/bg2.png';
 import {
-  InfiniteCanvasIcon,
   AIAssistantIcon,
-  PDFIntegrationIcon,
-  RichTextEditorIcon,
-  SmartTagIcon,
-  KnowledgeNetworkIcon,
-  MCPToolIcon,
   AgentCollaborationIcon,
   BrainstormIcon,
   CrossModalIcon,
+  InfiniteCanvasIcon,
   KnowledgeCollectionIcon,
+  KnowledgeNetworkIcon,
   KnowledgeSedimentationIcon,
+  MCPToolIcon,
+  PDFIntegrationIcon,
+  RichTextEditorIcon,
+  SmartTagIcon,
 } from './platform-icons';
-
 import { Title } from './title';
 import { FreeButton } from './free-button';
 

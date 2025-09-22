@@ -1,9 +1,10 @@
 'use client';
 
-import bgUrl from '../assets/images/bg.jpg';
-import Footer from './footer';
 import { useState } from 'react';
 import Image from 'next/image';
+
+import bgUrl from '../assets/images/bg.jpg';
+import Footer from './footer';
 
 const LIST = [
   {
@@ -180,20 +181,21 @@ const KnowledgeNetworkSection = () => {
                 </svg>
                 <input placeholder="请输入你的邮箱地址" className="border-none bg-transparent outline-none" />
               </div>
-              <div 
-                className="relative flex w-[230px] h-[55px] cursor-pointer flex-row items-center rounded-full bg-black text-white hover:bg-black"
+              <button
+                type="button"
+                className="relative flex h-[55px] w-[230px] cursor-pointer flex-row items-center rounded-full bg-black text-white hover:bg-black"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <span className='absolute left-[28px]'>开始构建知识网络</span>
+                <span className="absolute left-[28px]">开始构建知识网络</span>
                 <Image
-                  src={isHovered ? "/Vector-hover.png" : "/Vector.png"}
+                  src={isHovered ? '/Vector-hover.png' : '/Vector.png'}
                   alt="Arrow icon"
                   width={isHovered ? 61 : 43}
                   height={isHovered ? 61 : 43}
                   className={`absolute ${isHovered ? 'right-[-1px]' : 'right-[7.5px]'}`}
                 />
-              </div>
+              </button>
             </div>
           </div>
         </div>
