@@ -19,7 +19,13 @@ const Hero = () => {
             <h1 className="mb-6 !text-[133px] font-bold leading-tight text-gray-900 md:text-6xl lg:text-7xl">
               <TypewriterText 
                 texts={['构建知识网络', '释放思维潜能']} 
-                textStyles={['', 'bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent']}
+                textStyles={['', '']}
+                customStyles={[{}, {
+                  background: 'linear-gradient(92deg, #9B99FF 0.61%, #937DEE 40.5%, #504DD1 99.39%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }]}
                 speed={150} 
                 deleteSpeed={75} 
                 pauseDuration={3000} 

@@ -196,7 +196,7 @@ export const ParticlesBackground = ({
 
   return (
     <div className={cn('relative h-full w-full overflow-hidden', 'bg-white dark:bg-black', className)}>
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      {/* <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" /> */}
 
       <div className="relative z-10 flex h-full w-full items-center justify-center">{children}</div>
     </div>
