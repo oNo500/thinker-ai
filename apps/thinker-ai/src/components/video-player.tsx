@@ -35,6 +35,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [shouldPlay, setShouldPlay] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -45,7 +47,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         entries.forEach((entry) => {
           setIsInView(entry.isIntersecting);
           // 只有当autoPlay为true且视频在视口中时才播放
-          setShouldPlay(autoPlay && entry.isIntersecting);
+          const shouldAutoPlay = autoPlay && entry.isIntersecting;
+          setShouldPlay(shouldAutoPlay);
+          setIsPlaying(shouldAutoPlay);
         });
       },
       {
@@ -61,8 +65,23 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     };
   }, [autoPlay, threshold]);
 
+  // 切换播放/暂停状态
+  const togglePlay = () => {
+    if (isInView) {
+      const newPlayingState = !isPlaying;
+      setIsPlaying(newPlayingState);
+      setShouldPlay(newPlayingState);
+    }
+  };
+
+
   return (
-    <div ref={containerRef} className={cn('overflow-hidden rounded-lg', className)}>
+    <div 
+      ref={containerRef} 
+      className={cn('relative overflow-hidden rounded-lg group', className)}
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => setShowControls(false)}
+    >
       <ReactPlayer
         src={src}
         playing={shouldPlay}
@@ -77,6 +96,39 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           overflow: 'hidden',
         }}
       />
+      
+      {/* 播放/暂停控制按钮 */}
+      {isInView && (
+        <div 
+          className={cn(
+            'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
+            showControls || !isPlaying ? 'opacity-100' : 'opacity-0'
+          )}
+        >
+          <button
+            onClick={togglePlay}
+            className={cn(
+              'flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-all duration-200 hover:bg-black/80 hover:scale-110',
+              'backdrop-blur-sm border border-white/20'
+            )}
+            aria-label={isPlaying ? '暂停视频' : '播放视频'}
+          >
+            {isPlaying ? (
+              // 暂停图标
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1" />
+                <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1" />
+              </svg>
+            ) : (
+              // 播放图标
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
+              </svg>
+            )}
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
