@@ -155,7 +155,7 @@ const Carousel = () => {
 
   const visibleItems = getVisibleItems();
   const jumpToThinker = () => {
-    window.open(PDF_PRD_URL, '_self');
+    // window.open(PDF_PRD_URL, '_self');
   };
 
   return (

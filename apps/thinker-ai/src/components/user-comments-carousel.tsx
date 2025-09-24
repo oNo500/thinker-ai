@@ -173,7 +173,7 @@ const UserCommentsCarousel: React.FC<UserCommentsCarouselProps> = ({ className }
   );
 
   return (
-    <div className={cn('mx-auto w-full max-w-7xl px-4', className)}>
+    <div className={cn('mx-auto w-[80%] px-4', className)}>
       {/* 使用 Marquee 实现持续滚动 */}
       <div className="relative overflow-hidden">
         <Marquee pauseOnHover className="[--duration:40s]">
