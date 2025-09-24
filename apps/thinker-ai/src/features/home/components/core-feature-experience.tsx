@@ -25,7 +25,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '无限画布',
       icon: <Icon5 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
+      video: './无限画布.mp4',
       subTitle: ['无限空间，', '让你的思绪自由流动'],
       list: [
         '无限大的可视化工作空间，直观的拖拽和连线操作',
@@ -36,7 +36,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '跨形态知识联动',
       icon: <Icon6 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/huaciliandong.mp4',
+      video: './划词联动.mp4',
       subTitle: ['划词生成节点，', '多载体精准绑定跳转'],
       list: [
         'PDF/ 文本 / 视频统一管理，覆盖全形态知识资产',

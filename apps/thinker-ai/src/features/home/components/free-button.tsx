@@ -26,13 +26,14 @@ export const FreeButton = ({ className }: FreeButtonProps) => {
       )}
     >
       <span className="absolute left-[28px]">免费体验&nbsp;&nbsp;&nbsp;</span>
-      <Image
+      {/* <Image
         src={isHovered ? '/Vector-hover.png' : '/Vector.png'}
         alt="Arrow icon"
         width={isHovered ? 61 : 43}
         height={isHovered ? 61 : 43}
         className={`absolute ${isHovered ? 'right-[-1px]' : 'right-[7.5px]'}`}
-      />
+      /> */}
+      <Image src={'/Vector.png'} alt="Arrow icon" width={43} height={43} className={`absolute right-[7.5px]`} />
     </Button>
   );
 };

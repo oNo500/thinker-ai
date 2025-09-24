@@ -41,17 +41,34 @@ const KnowledgeManagementPlatform = () => {
 // 轮播图数据
 const DATA_LIST = [
   {
+    title: '无限画布',
+    subTitle: '可视化思维',
+    description: '在无限大的工作空间中自由创作，用直观的方式组织和连接你的想法。',
+    icon: <InfiniteCanvasIcon />,
+  },
+  {
+    title: '跨形态知识联动',
+    subTitle: '多形态管理',
+    description: '划词自动生成思维导图节点，关联原文精准定位。PDF/文本/视频统一管理，覆盖全形态知识资产。',
+    icon: <CrossModalIcon />,
+  },
+  {
     title: '多源引用问答',
     subTitle: '类Cursor交互',
-    description:
-      '划词关联知识库提问；预设指令模板+自定义Agent，适配科研、企业等多元场景需求。',
+    description: '划词关联知识库提问；预设指令模板+自定义Agent，适配科研、企业等多元场景需求。',
     icon: <InfiniteCanvasIcon />,
   },
   {
     title: 'Agent深度协同',
     subTitle: '多模型接力处理',
-    description:'文本节点直连模型节点，搭建专属Agent。多模型接力处理，深度生成如论文改写、行业报告等专业内容。',
+    description: '文本节点直连模型节点，搭建专属Agent。多模型接力处理，深度生成如论文、行业报告等专业内容。',
     icon: <AgentCollaborationIcon />,
+  },
+  {
+    title: '智能工作流系统',
+    subTitle: '操作自动透明',
+    description: '类 Manus 功能，拆解用户工作流，模型驱动电脑操作，让任务执行自动化、可视化。',
+    icon: <MCPToolIcon />,
   },
   {
     title: 'AI头脑风暴',
@@ -60,35 +77,15 @@ const DATA_LIST = [
     icon: <BrainstormIcon />,
   },
   {
-    title: '智能工作流系统',
-    subTitle: '操作自动透明',
-    description:
-      '类 Manus 功能，拆解用户工作流，模型驱动电脑操作，让任务执行自动化、可视化。',
-    icon: <MCPToolIcon />,
-  },
-  {
-    title: '无限画布',
-    subTitle: '可视化思维',
-    description: '在无限大的工作空间中自由创作，用直观的方式组织和连接你的想法。',
-    icon: <InfiniteCanvasIcon />,
-  },
-  {
-    title: '智能标签',
-    subTitle: '灵活组织',
-    description: '多维度标签支持Dataview式筛选，助项目管理与高效检索。',
-    icon: <SmartTagIcon />,
-  },
-  {
-    title: '富文本编辑',
-    subTitle: '智能Diff比对',
-    description: '富文本编辑支持Markdown，还能 Diff 比对模型与原回答，让你灵活选内容！',
-    icon: <RichTextEditorIcon />,
+    title: '自定义专属工具',
+    subTitle: '让AI更懂你的需求',
+    description: '无需编程就能构建专属工具、记忆Prompt并灵活调用，还能在工具市场分享共建生态。',
+    icon: <PDFIntegrationIcon />,
   },
   {
     title: '智能知识采集',
     subTitle: 'AI预筛去重',
-    description:
-      '打破形态限制，支持网页/视频/音频等全形态知识，同时支持AI预筛去重，告别低效采集。',
+    description: '打破形态限制，支持网页/视频/音频等全形态知识，同时支持AI预筛去重，告别低效采集。',
     icon: <KnowledgeCollectionIcon />,
   },
   {
@@ -98,16 +95,16 @@ const DATA_LIST = [
     icon: <AIAssistantIcon />,
   },
   {
-    title: '跨形态知识联动',
-    subTitle: '多形态管理',
-    description: '划词自动生成思维导图节点，关联原文精准定位。PDF/文本/视频统一管理，覆盖全形态知识资产。',
-    icon: <CrossModalIcon />,
+    title: '富文本编辑',
+    subTitle: '智能Diff比对',
+    description: '支持Markdown，还能 Diff 比对模型回答与原内容，自由选留，让创作更高效！',
+    icon: <RichTextEditorIcon />,
   },
   {
-    title: '自定义专属工具',
-    subTitle: '让AI更懂你的需求',
-    description: '无需编程就能构建专属工具、记忆Prompt并灵活调用，还能在工具市场分享共建生态。',
-    icon: <PDFIntegrationIcon />,
+    title: '智能标签',
+    subTitle: '灵活组织',
+    description: '多维度标签支持Dataview式筛选，帮助项目管理与高效检索。',
+    icon: <SmartTagIcon />,
   },
   {
     title: '知识沉淀归档',
@@ -120,16 +117,19 @@ const DATA_LIST = [
 // 轮播图组件
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const totalItems = DATA_LIST.length;
 
   // 自动轮播功能
   useEffect(() => {
+    if (isHovered) return; // 如果正在悬停，则不启动定时器
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalItems);
-    }, 2000); // 每2秒切换一次
+    }, 3000); // 每3秒切换一次
 
     return () => clearInterval(interval); // 清理定时器
-  }, [totalItems]);
+  }, [totalItems, isHovered]);
 
   const getVisibleItems = () => {
     const items = [];
@@ -159,7 +159,14 @@ const Carousel = () => {
 
   return (
     <section className="relative w-full py-20">
-      <div className="flex items-center justify-center">
+      <div
+        className="flex items-center justify-center"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        role="button"
+        tabIndex={0}
+        aria-label="视频轮播区域"
+      >
         {/* 左侧高斯模糊遮罩 */}
         <div
           className="左高斯模糊 pointer-events-none absolute left-0 top-0 z-[60] h-full w-[330px]"
@@ -197,7 +204,7 @@ const Carousel = () => {
             return (
               <div
                 key={`${item.originalIndex}-${index}`}
-                className={`relative flex-shrink-0 rounded-3xl border border-gray-100 bg-white shadow-lg transition-all duration-500 ease-in-out ${isCenter ? 'h-[293px] w-[616px] -translate-y-[104px]' : 'h-[293px] w-[293px] border-[#D8D8D8]'} ${getZIndex()} ${getMargin()} `}
+                className={`relative flex-shrink-0 select-none rounded-3xl border border-gray-100 bg-white shadow-lg transition-all duration-500 ease-in-out ${isCenter ? 'h-[293px] w-[616px] -translate-y-[104px]' : 'h-[293px] w-[293px] border-[#D8D8D8]'} ${getZIndex()} ${getMargin()} `}
                 style={{
                   boxShadow: isCenter
                     ? '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 40px rgba(110, 107, 238, 0.15)'
@@ -251,7 +258,7 @@ const Carousel = () => {
                     {/* 左控制器 - 在形态1卡片左侧外面 */}
                     <button
                       onClick={prevSlide}
-                      className="absolute -left-16 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center transition-all"
+                      className="absolute -left-16 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 select-none items-center justify-center transition-all"
                     >
                       <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -264,7 +271,7 @@ const Carousel = () => {
                     {/* 右控制器 - 在形态1卡片右侧外面 */}
                     <button
                       onClick={nextSlide}
-                      className="absolute -right-16 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center transition-all"
+                      className="absolute -right-16 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 select-none items-center justify-center transition-all"
                     >
                       <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -296,7 +303,7 @@ const Carousel = () => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 ${
+            className={`h-3 w-3 select-none rounded-full transition-all duration-300 ${
               currentIndex === index ? 'scale-125 bg-[#6E6BEE]' : 'bg-gray-300 hover:bg-gray-400'
             }`}
           />
@@ -309,27 +316,19 @@ const Carousel = () => {
 const STEP_LIST = [
   {
     title: '知识采集',
-    description: 'PDF、网页、笔记',
+    description: '多形态采集，AI预筛去重',
   },
   {
-    title: '知识入仓',
-    description: 'AI预筛去重',
-  },
-  {
-    title: '知识交互',
-    description: '划词关联、AI问答',
+    title: '知识处理',
+    description: '结构化节点，跨文档关联',
   },
   {
     title: '知识沉淀',
+    description: '划词关联、AI问答',
+  },
+  {
+    title: '应用复利',
     description: '个性化知识仓库',
-  },
-  {
-    title: '场景自动化',
-    description: 'Agent、MCP自动化',
-  },
-  {
-    title: '知识闭环',
-    description: '知识复制',
   },
 ];
 

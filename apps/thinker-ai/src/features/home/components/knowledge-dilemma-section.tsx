@@ -41,7 +41,19 @@ const KnowledgeDilemmaSection = () => {
       </div>
       <div className="数字 mx-auto mt-20 flex max-w-[1240px] flex-row justify-between">
         {DATA_LIST.map((item, index) => (
-          <div key={index} className="flex w-[356px] flex-col rounded-[20px] p-[25px] hover:bg-[#6E6BEE]/5">
+          <div
+            key={index}
+            className="relative flex w-[356px] flex-col rounded-[20px] p-[25px]"
+            role="button"
+            tabIndex={0}
+            onMouseEnter={() => setHoveredCard(index + CARD_LIST.length)}
+            onMouseLeave={() => setHoveredCard(null)}
+            onFocus={() => setHoveredCard(index + CARD_LIST.length)}
+            onBlur={() => setHoveredCard(null)}
+          >
+            {hoveredCard === index + CARD_LIST.length && (
+              <ShineBorder borderWidth={1.5} shineColor={['#6e6bee', '#a855f7', '#3b82f6']} />
+            )}
             <div className="flex flex-row items-center justify-center gap-[25px]">
               {item.icon}
               <div className="text-[50px] font-extrabold leading-[80px]">{item.title}</div>
