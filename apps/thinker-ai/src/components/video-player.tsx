@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import ReactPlayer from 'react-player';
 
 import { cn } from '@/lib/utils';
@@ -17,6 +17,7 @@ interface VideoPlayerProps {
   controls?: boolean;
   playsInline?: boolean;
   threshold?: number; // 视口交叉阈值，默认0.5（50%可见时播放）
+  showProgressBar?: boolean; // 是否显示进度条
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -31,12 +32,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   controls = false,
   playsInline = true,
   threshold = 0.5,
+  showProgressBar = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<HTMLVideoElement | null>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [shouldPlay, setShouldPlay] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  
+  // 调试开关
+  const DEBUG = true;
+  
+  // 进度条相关状态
+  const [duration, setDuration] = useState(0);
+  const [played, setPlayed] = useState(0);
+  const [seeking, setSeeking] = useState(false);
+  const [currentSeconds, setCurrentSeconds] = useState(0);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -45,9 +58,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          if (DEBUG) console.log('[VideoPlayer] IntersectionObserver', { isIntersecting: entry.isIntersecting, autoPlay });
           setIsInView(entry.isIntersecting);
           // 只有当autoPlay为true且视频在视口中时才播放
           const shouldAutoPlay = autoPlay && entry.isIntersecting;
+          if (DEBUG) console.log('[VideoPlayer] shouldAutoPlay', shouldAutoPlay);
           setShouldPlay(shouldAutoPlay);
           setIsPlaying(shouldAutoPlay);
         });
@@ -69,10 +84,108 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const togglePlay = () => {
     if (isInView) {
       const newPlayingState = !isPlaying;
+      if (DEBUG) console.log('[VideoPlayer] togglePlay', { from: isPlaying, to: newPlayingState });
       setIsPlaying(newPlayingState);
       setShouldPlay(newPlayingState);
     }
   };
+
+  // ReactPlayer事件回调
+  const handleProgress = useCallback((state: { played: number; playedSeconds: number; loaded: number; loadedSeconds: number }) => {
+    if (!seeking) {
+      setPlayed(state.played ?? 0);
+      setCurrentSeconds(state.playedSeconds ?? 0);
+    }
+  }, [seeking]);
+
+  const handleDuration = useCallback((seconds: number) => {
+    if (DEBUG) console.log('[VideoPlayer] onDuration', seconds);
+    setDuration(Number.isFinite(seconds) ? seconds : 0);
+  }, []);
+
+  // Ready 时优先通过实例方法读取总时长
+  // HTML5 视频事件：元数据加载完成可拿到时长
+  const handleLoadedMetadata = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    const dur = (e.currentTarget as HTMLVideoElement).duration ?? 0;
+    if (DEBUG) console.log('[VideoPlayer] onLoadedMetadata duration', dur);
+    setDuration(Number.isFinite(dur) ? dur : 0);
+  }, [DEBUG]);
+
+  // HTML5 视频事件：时间更新
+  const handleTimeUpdate = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (seeking) return;
+    const el = e.currentTarget as HTMLVideoElement;
+    const currentTime = el.currentTime ?? 0;
+    const dur = duration || el.duration || 0;
+    const playedRatio = dur > 0 ? currentTime / dur : 0;
+    if (DEBUG) console.log('[VideoPlayer] onTimeUpdate', { currentTime, dur, playedRatio });
+    setCurrentSeconds(currentTime);
+    setDuration(Number.isFinite(dur) ? dur : 0);
+    setPlayed(playedRatio);
+  }, [seeking, duration, DEBUG]);
+
+  // 进度条交互处理
+  const handleSeekMouseDown = useCallback(() => {
+    if (DEBUG) console.log('[VideoPlayer] seek mousedown');
+    setSeeking(true);
+  }, []);
+
+  const handleSeekChange = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!progressBarRef.current) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newPlayed = clickX / rect.width;
+    const clamped = Math.max(0, Math.min(1, newPlayed));
+    if (DEBUG) console.log('[VideoPlayer] seek changing', { clickX, width: rect.width, clamped, previewSeconds: clamped * duration });
+    setPlayed(clamped);
+    setCurrentSeconds(clamped * duration);
+  }, [duration]);
+
+  const handleSeekMouseUp = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!progressBarRef.current || !playerRef.current) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newPlayed = clickX / rect.width;
+    const clampedPlayed = Math.max(0, Math.min(1, newPlayed));
+    if (DEBUG) console.log('[VideoPlayer] seek mouseup', { clampedPlayed, targetSeconds: clampedPlayed * duration });
+    setPlayed(clampedPlayed);
+    try {
+      const target = playerRef.current as any;
+      if (DEBUG) console.log('[VideoPlayer] calling seek', { clampedPlayed });
+      if (target && typeof target.seekTo === 'function') {
+        target.seekTo(clampedPlayed);
+      } else if (playerRef.current) {
+        playerRef.current.currentTime = clampedPlayed * duration;
+      }
+    } catch {}
+    setCurrentSeconds(clampedPlayed * duration);
+    setSeeking(false);
+  }, [duration]);
+
+  // 在进度回调中，如果未拿到时长，尝试用反推方式得到一次
+  const handleBufferProgress = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (!DEBUG) return;
+    const el = e.currentTarget as HTMLVideoElement;
+    let bufferedEnd = 0;
+    try {
+      const last = el.buffered.length - 1;
+      if (last >= 0) bufferedEnd = el.buffered.end(last);
+    } catch {}
+    console.log('[VideoPlayer] onProgress(buffering)', { readyState: el.readyState, bufferedEnd });
+  }, [DEBUG]);
+
+  // 格式化时间显示
+  const formatTime = useCallback((seconds: number) => {
+    if (!Number.isFinite(seconds) || seconds <= 0) return '0:00';
+    const date = new Date(seconds * 1000);
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = date.getUTCSeconds().toString().padStart(2, '0');
+    if (hh) {
+      return `${hh}:${mm.toString().padStart(2, '0')}:${ss}`;
+    }
+    return `${mm}:${ss}`;
+  }, []);
 
 
   return (
@@ -82,7 +195,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
+      {/* 使用 HTML5 事件：onLoadedMetadata/onTimeUpdate；progress 用于缓冲日志 */}
       <ReactPlayer
+        ref={playerRef}
         src={src}
         playing={shouldPlay}
         muted={muted}
@@ -91,6 +206,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         playsInline={playsInline}
         width={width}
         height={height}
+        onLoadedMetadata={handleLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
+        onProgress={handleBufferProgress}
+        onPlay={() => DEBUG && console.log('[VideoPlayer] onPlay')}
+        onPause={() => DEBUG && console.log('[VideoPlayer] onPause')}
+        onError={(e: any) => DEBUG && console.warn('[VideoPlayer] onError', e)}
         style={{
           borderRadius: '8px',
           overflow: 'hidden',
@@ -129,6 +250,52 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </div>
       )}
 
+      {/* 进度条 */}
+      {showProgressBar && isInView && (
+        <div 
+          className={cn(
+            'absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-300 select-none',
+            showControls ? 'opacity-100' : 'opacity-0'
+          )}
+        >
+          <div className="flex items-center gap-3 text-white text-sm">
+            {/* 当前时间 */}
+            <span className="min-w-[40px] text-xs">
+              {formatTime(seeking ? played * duration : currentSeconds)}
+            </span>
+            
+            {/* 进度条容器 */}
+            <div 
+              ref={progressBarRef}
+              className="flex-1 h-1 bg-white/30 rounded-full cursor-pointer group/progress select-none caret-transparent outline-none"
+              tabIndex={-1}
+              onMouseDown={(e) => { e.preventDefault(); handleSeekMouseDown(); }}
+              onMouseMove={seeking ? handleSeekChange : undefined}
+              onMouseUp={(e) => { e.preventDefault(); handleSeekMouseUp(e); }}
+              onClick={(e) => { e.preventDefault(); handleSeekMouseUp(e); }}
+            >
+              {/* 进度条背景 */}
+              <div className="relative h-full">
+                {/* 已播放进度 */}
+                <div 
+                  className="h-full bg-white rounded-full transition-all duration-100"
+                  style={{ width: `${played * 100}%` }}
+                />
+                {/* 进度点 */}
+                <div 
+                  className="absolute top-1/2 w-3 h-3 bg-white rounded-full -translate-y-1/2 transform transition-opacity duration-200 opacity-0 group-hover/progress:opacity-100"
+                  style={{ left: `${played * 100}%`, marginLeft: '-6px' }}
+                />
+              </div>
+            </div>
+            
+            {/* 总时长 */}
+            <span className="min-w-[40px] text-xs">
+              {formatTime(duration)}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
