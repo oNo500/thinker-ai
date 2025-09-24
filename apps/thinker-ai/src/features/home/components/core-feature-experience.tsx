@@ -26,7 +26,7 @@ const CoreFeatureExperience: React.FC = () => {
       title: '多源引用问答',
       icon: <Icon1 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/duoyuanyinyong.mp4',
-      subTitle: ['类 Cursor 式引用问答，', '全知识库/跨文档交互'],
+      subTitle: ['跨文档引用问答，', '类 Cursor 式全库交互'],
       list: [
         '支持节点、文章、图片等多形态引用提问，打破形态限制，跨文档协同提问',
         '划词即可触发提问，AI 结合全量知识储备深度解析，答案更精准',
@@ -41,11 +41,11 @@ const CoreFeatureExperience: React.FC = () => {
       list: [
         '文本节点直连模型节点，自主搭建专属 Agent 流程',
         '输入内容经多模型接力深度处理',
-        '针对性处理文本片段，生成高度定制的专业成果（论文改写、行业分析报告 ）',
+        '针对性处理知识片段，生成高度定制的专业成果（论文改写、行业分析报告等）',
       ],
     },
     {
-      title: 'MCP工作流拆解',
+      title: 'MCP工作流系统',
       icon: <Icon3 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/mcp.mp4',
       subTitle: ['MCP配置助力，', 'AI 让操作自动化+可视化'],
@@ -70,8 +70,8 @@ const CoreFeatureExperience: React.FC = () => {
       title: '无限画布',
       icon: <Icon5 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
-      subTitle: ['无限画布，', '让你的思绪自由流动'],
-      list: ['无限大的可视化工作空间', '直观的拖拽和连线操作', '富文本节点和自定义样式', '思维导图、流程图等多种结构'],
+      subTitle: ['无限空间，', '让你的思绪自由流动'],
+      list: ['无限大的可视化工作空间，直观的拖拽和连线操作', '支持多种节点类型，普通富文本节点、模型节点及视频 / 图片等多媒体节点', '支持节点分组管理，支持思维导图、流程图等多种结构'],
     },
     {
       title: '自定义专属工具',
@@ -80,7 +80,7 @@ const CoreFeatureExperience: React.FC = () => {
       subTitle: ['记忆Prompt+配置插件，', '让AI更懂你的需求'],
       list: [
         '轻松构建专属工具，无需编程技能，搭建轻量Agent',
-        '支持记忆常用 Prompt，封装成专属功能，指定调用位置（如右键菜单栏）',
+        '支持记忆常用 Prompt，封装成专属工具，指定调用位置（如右键菜单、快捷键）',
         '工具市场分享交流，社区共建生态',
       ],
     },
@@ -124,7 +124,7 @@ const CoreFeatureExperience: React.FC = () => {
       subTitle: ['AI 驱动内容对比整合，', '让创作更高效精准'],
       list: [
         '现代化编辑器支持 Markdown，专注内容创作流程',
-        '实现模型回答与原始回答 diff 比对，清晰呈现内容差异',
+        '实现模型回答与原始内容 Diff 比对，清晰呈现内容差异',
         '支持用户自主选择保留片段，灵活整合优质内容 ，创作更高效',
       ],
     },
@@ -145,9 +145,9 @@ const CoreFeatureExperience: React.FC = () => {
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishichendian.mp4',
       subTitle: ['一键引用沉淀，', '让知识积累更系统'],
       list: [
-        '可直接 cite 节点内容到记事本，保留完整引用链接',
+        '可直接 Cite 节点内容到记事本，保留完整引用链接',
         '一键引用模型回答片段，快速构建知识体系',
-        '支持 cite 文献片段，自动生成引用格式',
+        '支持 Cite 文献片段，自动生成引用格式',
         '记事本统一管理所有引用内容，形成个人知识库',
       ],
     },
