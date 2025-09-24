@@ -23,6 +23,28 @@ import Image10 from '../assets/images/image10.png';
 const CoreFeatureExperience: React.FC = () => {
   const FEATURE_LIST = [
     {
+      title: '无限画布',
+      icon: <Icon5 active={false} />,
+      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
+      subTitle: ['无限空间，', '让你的思绪自由流动'],
+      list: [
+        '无限大的可视化工作空间，直观的拖拽和连线操作',
+        '支持多种节点类型，普通富文本节点、模型节点及视频 / 图片等多媒体节点',
+        '支持节点分组管理，支持思维导图、流程图等多种结构',
+      ],
+    },
+    {
+      title: '跨形态知识联动',
+      icon: <Icon6 active={false} />,
+      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/huaciliandong.mp4',
+      subTitle: ['划词生成节点，', '多载体精准绑定跳转'],
+      list: [
+        'PDF/ 文本 / 视频统一管理，覆盖全形态知识资产',
+        '划词自动生成思维导图节点，关联原文精准定位',
+        '视频帧级定位、音频自动转写，精准提取关键信息',
+      ],
+    },
+    {
       title: '多源引用问答',
       icon: <Icon1 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/duoyuanyinyong.mp4',
@@ -45,10 +67,10 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: 'MCP工作流系统',
+      title: '智能工作流系统',
       icon: <Icon3 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/mcp.mp4',
-      subTitle: ['MCP配置助力，', 'AI 让操作自动化+可视化'],
+      subTitle: ['类Manus功能加持，', '自动化操作电脑更直观'],
       list: [
         '支持自主配置 MCP 能力，AI 智能拆解用户工作流',
         '模型可驱动电脑自动化操作（如搜索论文、下载文件至本地），替代手动执行',
@@ -67,13 +89,6 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: '无限画布',
-      icon: <Icon5 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
-      subTitle: ['无限空间，', '让你的思绪自由流动'],
-      list: ['无限大的可视化工作空间，直观的拖拽和连线操作', '支持多种节点类型，普通富文本节点、模型节点及视频 / 图片等多媒体节点', '支持节点分组管理，支持思维导图、流程图等多种结构'],
-    },
-    {
       title: '自定义专属工具',
       icon: <Icon11 active={false} />, // 可以复用图标或添加新图标
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zidingyi.mp4',
@@ -82,17 +97,6 @@ const CoreFeatureExperience: React.FC = () => {
         '轻松构建专属工具，无需编程技能，搭建轻量Agent',
         '支持记忆常用 Prompt，封装成专属工具，指定调用位置（如右键菜单、快捷键）',
         '工具市场分享交流，社区共建生态',
-      ],
-    },
-    {
-      title: '跨形态知识联动',
-      icon: <Icon6 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/huaciliandong.mp4',
-      subTitle: ['划词生成节点，', '多载体精准绑定跳转'],
-      list: [
-        'PDF/ 文本 / 视频统一管理，覆盖全形态知识资产',
-        '划词自动生成思维导图节点，关联原文精准定位',
-        '视频帧级定位、音频自动转写，精准提取关键信息',
       ],
     },
     {
@@ -107,10 +111,10 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: 'AI驱动结构化',
+      title: 'AI知识关联',
       icon: <Icon8 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/AIxiangsi.mp4',
-      subTitle: ['AI匹配知识相似度，', '关联推荐内容一步到位'],
+      subTitle: ['AI匹配相似片段，', '关联推荐知识一步到位'],
       list: [
         'AI 深度挖掘跨形态知识关联，串联碎片化内容',
         '输入关键词，AI 基于知识库自动构建知识框架',
@@ -132,7 +136,7 @@ const CoreFeatureExperience: React.FC = () => {
       title: '智能标签',
       icon: <Icon10 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhinengbiaoqian.mp4',
-      subTitle: ['双链笔记+标签', '告别混乱，玩转知识组织'],
+      subTitle: ['双链笔记+标签，', '告别混乱，玩转知识组织'],
       list: [
         '多维度标签赋能，实现 Dataview 式筛选与总结',
         '项目/分类管理，搭配灵活组织架构适配不同需求',
@@ -140,10 +144,10 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: '知识引用沉淀',
+      title: '知识沉淀归档',
       icon: <Icon12 active={false} />, // 可以复用图标或添加新图标
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishichendian.mp4',
-      subTitle: ['一键引用沉淀，', '让知识积累更系统'],
+      subTitle: ['一键附源归档，', '像 Reference 般清晰'],
       list: [
         '可直接 Cite 节点内容到记事本，保留完整引用链接',
         '一键引用模型回答片段，快速构建知识体系',

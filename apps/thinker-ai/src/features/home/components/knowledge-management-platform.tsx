@@ -42,29 +42,28 @@ const KnowledgeManagementPlatform = () => {
 const DATA_LIST = [
   {
     title: '多源引用问答',
-    subTitle: '场景化智能交互',
+    subTitle: '类Cursor交互',
     description:
-      '划词关联知识库提问，AI 基于上下文深度解答；预设指令模板 + 自定义 Agent，适配科研、企业等多元场景需求。',
+      '划词关联知识库提问；预设指令模板+自定义Agent，适配科研、企业等多元场景需求。',
     icon: <InfiniteCanvasIcon />,
   },
   {
     title: 'Agent深度协同',
     subTitle: '多模型接力处理',
-    description:
-      '文本节点直连模型节点，搭建专属 Agent 。输入内容经多模型接力处理，快速生成如论文改写、行业报告等完整专业内容。',
+    description:'文本节点直连模型节点，搭建专属Agent。多模型接力处理，深度生成如论文改写、行业报告等专业内容。',
     icon: <AgentCollaborationIcon />,
   },
   {
     title: 'AI头脑风暴',
     subTitle: '智能拓展创意',
-    description: '基于当前节点 + 知识库，AI 智能拓展创意，零散思考秒变体系化灵感，帮助科研思路推导、内容创意延伸 。',
+    description: '基于当前节点+知识库，AI智能拓展创意，零散思考秒变体系化灵感，帮助科研思路推导、创意延伸。',
     icon: <BrainstormIcon />,
   },
   {
-    title: 'MCP工作流系统',
+    title: '智能工作流系统',
     subTitle: '操作自动透明',
     description:
-      '借类 Manus 功能，AI 智能拆解用户工作流 。支持借模型驱动浏览器操作，流程全可视化，让知识获取与执行更自动化、透明化 。',
+      '类 Manus 功能，拆解用户工作流，模型驱动电脑操作，让任务执行自动化、可视化。',
     icon: <MCPToolIcon />,
   },
   {
@@ -76,44 +75,44 @@ const DATA_LIST = [
   {
     title: '智能标签',
     subTitle: '灵活组织',
-    description: '多维度标签支持 Dataview 式筛选，助项目管理与高效检索。',
+    description: '多维度标签支持Dataview式筛选，助项目管理与高效检索。',
     icon: <SmartTagIcon />,
   },
   {
     title: '富文本编辑',
-    subTitle: '流畅创作',
-    description: '富文本编辑支持 Markdown，还能 diff 比对模型与原回答，让你灵活选内容！',
+    subTitle: '智能Diff比对',
+    description: '富文本编辑支持Markdown，还能 Diff 比对模型与原回答，让你灵活选内容！',
     icon: <RichTextEditorIcon />,
   },
   {
     title: '智能知识采集',
     subTitle: 'AI预筛去重',
     description:
-      '打破形态限制，支持网页 / 视频 / 音频等全形态知识，借插件 “一键剪藏”+AI 预筛去重，采集即入库，告别零散整理。',
+      '打破形态限制，支持网页/视频/音频等全形态知识，同时支持AI预筛去重，告别低效采集。',
     icon: <KnowledgeCollectionIcon />,
   },
   {
-    title: 'AI驱动结构化',
-    subTitle: 'AI匹配知识关联',
-    description: 'AI 挖掘知识关联、串联碎片，输关键词自动构框架，让梳理更智能。',
+    title: 'AI知识关联',
+    subTitle: '匹配相似片段',
+    description: 'AI挖掘知识关联、串联碎片，输入关键词自动构建框架，让梳理更智能。',
     icon: <AIAssistantIcon />,
   },
   {
     title: '跨形态知识联动',
     subTitle: '多形态管理',
-    description: '划词 / 视频帧 与思维导图节点关联绑定，实现多形态统一管理，精准定位全形态知识。',
+    description: '划词自动生成思维导图节点，关联原文精准定位。PDF/文本/视频统一管理，覆盖全形态知识资产。',
     icon: <CrossModalIcon />,
   },
   {
     title: '自定义专属工具',
     subTitle: '让AI更懂你的需求',
-    description: '无需编程就能构建专属工具、记忆 Prompt 并灵活调用，还能在工具市场分享共建生态。',
+    description: '无需编程就能构建专属工具、记忆Prompt并灵活调用，还能在工具市场分享共建生态。',
     icon: <PDFIntegrationIcon />,
   },
   {
-    title: '知识引用沉淀',
+    title: '知识沉淀归档',
     subTitle: '让知识更系统',
-    description: '节点内容、模型回答片段及文献片段并自动生成格式，一键引用到记事本沉淀，形成个人知识库。',
+    description: '节点内容、模型回答片段及文献片段一键引用到记事本沉淀，同时标记来源，形成个人知识库。',
     icon: <KnowledgeSedimentationIcon />,
   },
 ];

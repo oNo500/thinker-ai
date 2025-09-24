@@ -51,6 +51,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const [seeking, setSeeking] = useState(false);
   const [currentSeconds, setCurrentSeconds] = useState(0);
 
+  // 倍速功能
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
+  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -81,6 +86,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     };
   }, [autoPlay, threshold]);
 
+  // 点击外部关闭倍速菜单
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (showSpeedMenu && containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setShowSpeedMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSpeedMenu]);
+
   // 切换播放/暂停状态
   const togglePlay = () => {
     if (isInView) {
@@ -88,6 +107,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       if (DEBUG) console.log('[VideoPlayer] togglePlay', { from: isPlaying, to: newPlayingState });
       setIsPlaying(newPlayingState);
       setShouldPlay(newPlayingState);
+    }
+  };
+
+  const toggleSpeedMenu = () => {
+    setShowSpeedMenu(!showSpeedMenu);
+  };
+
+  const selectSpeed = (speed: number) => {
+    setPlaybackRate(speed);
+    setShowSpeedMenu(false);
+
+    // 设置视频播放速度
+    if (playerRef.current) {
+      playerRef.current.playbackRate = speed;
     }
   };
 
@@ -226,6 +259,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         playsInline={playsInline}
         width={width}
         height={height}
+        playbackRate={playbackRate}
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
         onProgress={handleBufferProgress}
@@ -239,36 +273,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       />
 
       {/* 播放/暂停控制按钮 */}
-      {isInView && (
-        <div
-          className={cn(
-            'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
-            showControls || !isPlaying ? 'opacity-100' : 'opacity-0',
-          )}
-        >
-          <button
-            onClick={togglePlay}
-            className={cn(
-              'flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-all duration-200 hover:scale-110 hover:bg-black/80',
-              'border border-white/20 backdrop-blur-sm',
-            )}
-            aria-label={isPlaying ? '暂停视频' : '播放视频'}
-          >
-            {isPlaying ? (
-              // 暂停图标
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1" />
-                <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1" />
-              </svg>
-            ) : (
-              // 播放图标
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
-              </svg>
-            )}
-          </button>
-        </div>
-      )}
 
       {/* 进度条 */}
       {showProgressBar && isInView && (
@@ -279,6 +283,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           )}
         >
           <div className="flex items-center gap-3 text-sm text-white">
+            {/* 播放/暂停按钮 */}
+            <button
+              onClick={togglePlay}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white transition-all duration-200 hover:bg-white/30"
+              aria-label={isPlaying ? '暂停视频' : '播放视频'}
+            >
+              {isPlaying ? (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
+                </svg>
+              )}
+            </button>
+
             {/* 当前时间 */}
             <span className="min-w-[40px] text-xs">{formatTime(seeking ? played * duration : currentSeconds)}</span>
 
@@ -319,6 +341,38 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
             {/* 总时长 */}
             <span className="min-w-[40px] text-xs">{formatTime(duration)}</span>
+
+            {/* 倍速按钮 */}
+            <div className="relative">
+              <button
+                onClick={toggleSpeedMenu}
+                className="flex h-6 w-12 items-center justify-center rounded bg-white/20 text-xs text-white transition-all duration-200 hover:bg-white/30"
+                aria-label={`当前倍速: ${playbackRate}x`}
+              >
+                {playbackRate}x
+              </button>
+
+              {/* 倍速选择菜单 */}
+              {showSpeedMenu && (
+                <div className="absolute bottom-10 right-0 z-10 rounded-lg bg-black/90 p-2 shadow-lg backdrop-blur-sm">
+                  <div className="flex flex-col gap-1">
+                    {speedOptions.map((speed) => (
+                      <button
+                        key={speed}
+                        onClick={() => selectSpeed(speed)}
+                        className={`rounded px-3 py-1 text-xs transition-colors duration-200 ${
+                          speed === playbackRate
+                            ? 'bg-white/30 text-white'
+                            : 'text-white/80 hover:bg-white/20 hover:text-white'
+                        }`}
+                      >
+                        {speed}x
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
