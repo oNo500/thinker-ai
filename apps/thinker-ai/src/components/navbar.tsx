@@ -28,7 +28,7 @@ const NAV_LIST = [
 
 export default function Navbar() {
   return (
-    <nav className="fixed left-0 top-0 z-50 w-full bg-white">
+    <nav className="z-150 fixed left-0 top-0 w-full bg-white">
       <div className="mx-auto flex h-16 flex-nowrap items-center justify-between gap-4 whitespace-nowrap px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0">
           <Link href="/" className="item-center flex gap-2">

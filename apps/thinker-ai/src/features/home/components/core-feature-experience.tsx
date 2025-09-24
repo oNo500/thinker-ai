@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { cloneElement, useState } from 'react';
 import Image from 'next/image';
 
 import UserCommentsCarousel from '@/components/user-comments-carousel';
 import VideoPlayer from '@/components/video-player';
 import { cn } from '@/lib/utils';
 
-import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10 } from '../assets/icons';
+import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10, Icon11, Icon12 } from '../assets/icons';
 import { Title } from './title';
 import Image1 from '../assets/images/image1.png';
 import Image2 from '../assets/images/image2.png';
@@ -21,24 +21,23 @@ import Image9 from '../assets/images/image9.png';
 import Image10 from '../assets/images/image10.png';
 
 const CoreFeatureExperience: React.FC = () => {
-  const [active, setActive] = useState(0);
   const FEATURE_LIST = [
     {
-      title: '多源引用式回答',
-      icon: <Icon1 active={active === 0} />,
+      title: '多源引用问答',
+      icon: <Icon1 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/duoyuanyinyong.mp4',
-      subTitle: ['AI 驱动多源知识问答，', '类cursor式全库交互'],
+      subTitle: ['类 Cursor 式引用问答，', '全知识库/跨文档交互'],
       list: [
-        '支持引用节点、文章、文章片段等多类型知识，像 Cursor 一样基于整个知识库做上下文问答',
+        '支持节点、文章、图片等多形态引用提问，打破形态限制，跨文档协同提问',
         '划词即可触发提问，AI 结合全量知识储备深度解析，答案更精准',
         '搭配预设指令模板 + 自定义 Agent，适配科研、企业等不同场景的交互需求',
       ],
     },
     {
       title: 'Agent深度协同',
-      icon: <Icon2 active={active === 1} />,
+      icon: <Icon2 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/agent.mp4',
-      subTitle: ['多模型协同接力，', '自主搭建专属Agent'],
+      subTitle: ['多模型接力，', '自主搭建专属Agent'],
       list: [
         '文本节点直连模型节点，自主搭建专属 Agent 流程',
         '输入内容经多模型接力深度处理',
@@ -47,18 +46,18 @@ const CoreFeatureExperience: React.FC = () => {
     },
     {
       title: 'MCP工作流拆解',
-      icon: <Icon3 active={active === 2} />,
+      icon: <Icon3 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/mcp.mp4',
       subTitle: ['MCP配置助力，', 'AI 让操作自动化+可视化'],
       list: [
         '支持自主配置 MCP 能力，AI 智能拆解用户工作流',
-        '模型可驱动浏览器操作（如搜索论文、下载文件至本地），替代手动执行',
+        '模型可驱动电脑自动化操作（如搜索论文、下载文件至本地），替代手动执行',
         '全流程可视化呈现，知识获取与执行既自动化又透明可控',
       ],
     },
     {
       title: 'AI头脑风暴',
-      icon: <Icon4 active={active === 3} />,
+      icon: <Icon4 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/tounaofengbao.mp4',
       subTitle: ['基于当前节点+知识库，', 'AI智能拓展创意'],
       list: [
@@ -69,14 +68,25 @@ const CoreFeatureExperience: React.FC = () => {
     },
     {
       title: '无限画布',
-      icon: <Icon5 active={active === 4} />,
+      icon: <Icon5 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
       subTitle: ['无限画布，', '让你的思绪自由流动'],
       list: ['无限大的可视化工作空间', '直观的拖拽和连线操作', '富文本节点和自定义样式', '思维导图、流程图等多种结构'],
     },
     {
+      title: '自定义专属工具',
+      icon: <Icon11 active={false} />, // 可以复用图标或添加新图标
+      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zidingyi.mp4',
+      subTitle: ['记忆Prompt+配置插件，', '让AI更懂你的需求'],
+      list: [
+        '轻松构建专属工具，无需编程技能，搭建轻量Agent',
+        '支持记忆常用 Prompt，封装成专属功能，指定调用位置（如右键菜单栏）',
+        '工具市场分享交流，社区共建生态',
+      ],
+    },
+    {
       title: '跨形态知识联动',
-      icon: <Icon6 active={active === 5} />,
+      icon: <Icon6 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/huaciliandong.mp4',
       subTitle: ['划词生成节点，', '多载体精准绑定跳转'],
       list: [
@@ -87,7 +97,7 @@ const CoreFeatureExperience: React.FC = () => {
     },
     {
       title: '智能知识采集',
-      icon: <Icon7 active={active === 6} />,
+      icon: <Icon7 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishicaiji.mp4',
       subTitle: ['AI预筛去重，', '让剪藏更自由高效'],
       list: [
@@ -98,7 +108,7 @@ const CoreFeatureExperience: React.FC = () => {
     },
     {
       title: 'AI驱动结构化',
-      icon: <Icon8 active={active === 7} />,
+      icon: <Icon8 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/AIxiangsi.mp4',
       subTitle: ['AI匹配知识相似度，', '关联推荐内容一步到位'],
       list: [
@@ -108,8 +118,8 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: 'Diff',
-      icon: <Icon9 active={active === 8} />,
+      title: 'Diff智能比对',
+      icon: <Icon9 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/diff.mp4',
       subTitle: ['AI 驱动内容对比整合，', '让创作更高效精准'],
       list: [
@@ -120,7 +130,7 @@ const CoreFeatureExperience: React.FC = () => {
     },
     {
       title: '智能标签',
-      icon: <Icon10 active={active === 9} />,
+      icon: <Icon10 active={false} />,
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhinengbiaoqian.mp4',
       subTitle: ['双链笔记+标签', '告别混乱，玩转知识组织'],
       list: [
@@ -130,20 +140,8 @@ const CoreFeatureExperience: React.FC = () => {
       ],
     },
     {
-      title: '自定义工具',
-      icon: <Icon1 active={active === 10} />, // 可以复用图标或添加新图标
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zidingyi.mp4',
-      subTitle: ['自定义专属工具，', '让AI更懂你的需求'],
-      list: [
-        '可视化构建专属工具，无需编程技能',
-        '支持多种触发方式：快捷键、右键菜单、划词触发',
-        '与知识库深度结合，打造个性化AI助手',
-        '工具市场分享交流，社区共建生态',
-      ],
-    },
-    {
-      title: '知识沉淀',
-      icon: <Icon2 active={active === 11} />, // 可以复用图标或添加新图标
+      title: '知识引用沉淀',
+      icon: <Icon12 active={false} />, // 可以复用图标或添加新图标
       video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishichendian.mp4',
       subTitle: ['一键引用沉淀，', '让知识积累更系统'],
       list: [
@@ -159,28 +157,14 @@ const CoreFeatureExperience: React.FC = () => {
       <div className="flex w-full flex-col items-center justify-center pt-[107px]">
         {/* 核心功能深度体验组件 */}
         <Title title="核心功能" subtitle="深度体验" description="每个功能都经过精心设计，为你的知识工作提供最佳体验" />
-        <div className="relative mt-[50px] flex w-[843px] flex-wrap justify-between gap-y-6">
+        <div className="relative mt-[50px] flex w-[1080px] flex-wrap justify-between gap-y-6">
           {FEATURE_LIST.map((item, index) => {
             return (
-              <div
-                key={index}
-                role="button"
-                tabIndex={0}
-                onClick={() => setActive(index)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    setActive(index);
-                  }
-                }}
-                className={cn(
-                  'flex h-[125px] w-[158px] cursor-pointer flex-col items-center justify-center rounded-[10px]',
-                  {
-                    'bg-black text-white': active === index,
-                  },
-                )}
-              >
+              <div key={index} className="flex h-[125px] w-[158px] flex-col items-center justify-center rounded-[10px]">
                 <div className="flex flex-col items-center gap-4 font-medium">
-                  {item.icon}
+                  <div className="flex h-[43px] items-center justify-center">
+                    {cloneElement(item.icon, { active: false })}
+                  </div>
                   <p>{item.title}</p>
                 </div>
               </div>
@@ -194,17 +178,16 @@ const CoreFeatureExperience: React.FC = () => {
             return (
               <div
                 key={index}
-                style={{
-                  zIndex: active === index ? 10 : 1,
-                }}
                 className={cn(
                   'flex w-[1604px] flex-nowrap justify-between p-[61px] pb-[0px] pt-[30px]',
                   index % 2 === 1 ? 'flex-row-reverse' : 'flex-row',
                 )}
               >
-                <div className={cn('flex w-[390px] flex-col justify-center gap-[30px]')}>
+                <div className={cn('flex w-[390px] flex-col justify-center gap-[25px]')}>
                   <div className="mb-[10px] flex items-center gap-[15px]">
-                    <div className="flex-shrink-0">{item.icon}</div>
+                    <div className="flex h-[43px] w-[43px] flex-shrink-0 items-center justify-center">
+                      {cloneElement(item.icon, { active: false })}
+                    </div>
                     <h3
                       className="text-[25px] font-semibold"
                       style={{

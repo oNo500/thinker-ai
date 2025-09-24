@@ -74,11 +74,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
   };
 
-
   return (
-    <div 
-      ref={containerRef} 
-      className={cn('relative overflow-hidden rounded-lg group', className)}
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      ref={containerRef}
+      className={cn('group relative overflow-hidden rounded-lg', className)}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -96,20 +96,20 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           overflow: 'hidden',
         }}
       />
-      
+
       {/* 播放/暂停控制按钮 */}
       {isInView && (
-        <div 
+        <div
           className={cn(
             'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
-            showControls || !isPlaying ? 'opacity-100' : 'opacity-0'
+            showControls || !isPlaying ? 'opacity-100' : 'opacity-0',
           )}
         >
           <button
             onClick={togglePlay}
             className={cn(
-              'flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-all duration-200 hover:bg-black/80 hover:scale-110',
-              'backdrop-blur-sm border border-white/20'
+              'flex h-16 w-16 items-center justify-center rounded-full bg-black/60 text-white transition-all duration-200 hover:scale-110 hover:bg-black/80',
+              'border border-white/20 backdrop-blur-sm',
             )}
             aria-label={isPlaying ? '暂停视频' : '播放视频'}
           >
@@ -128,7 +128,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           </button>
         </div>
       )}
-
     </div>
   );
 };

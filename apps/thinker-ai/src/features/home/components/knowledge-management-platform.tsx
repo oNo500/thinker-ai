@@ -41,76 +41,79 @@ const KnowledgeManagementPlatform = () => {
 // 轮播图数据
 const DATA_LIST = [
   {
-    title: '多源引用式问答',
-    subTitle: '垂直化智能交互',
-    description: '整合多种的资源，为用户工工交回的问题，基於结合实际认知、Agents、搜索等，汇聚数字化知识服务。',
+    title: '多源引用问答',
+    subTitle: '场景化智能交互',
+    description:
+      '划词关联知识库提问，AI 基于上下文深度解答；预设指令模板 + 自定义 Agent，适配科研、企业等多元场景需求。',
     icon: <InfiniteCanvasIcon />,
   },
   {
     title: 'Agent深度协同',
-    subTitle: '多智能体协作',
-    description: '基于大型Agent运行的分布联盟，支援更复杂的目标分解与调度协作，白动获得学习目标。',
+    subTitle: '多模型接力处理',
+    description:
+      '文本节点直连模型节点，搭建专属 Agent 。输入内容经多模型接力处理，快速生成如论文改写、行业报告等完整专业内容。',
     icon: <AgentCollaborationIcon />,
   },
   {
     title: 'AI头脑风暴',
-    subTitle: '智能创意输出',
-    description: '基于你的信专专工级，AI智能整帮指定，意恩路前沿面你必化的是，为作者的创意分级。',
+    subTitle: '智能拓展创意',
+    description: '基于当前节点 + 知识库，AI 智能拓展创意，零散思考秒变体系化灵感，帮助科研思路推导、内容创意延伸 。',
     icon: <BrainstormIcon />,
   },
   {
     title: 'MCP工作流系统',
-    subTitle: '程序自动重组',
-    description: '支援的外部工作流配配协总，通过第三方结果、结构工程其的重要，构用程。',
+    subTitle: '操作自动透明',
+    description:
+      '借类 Manus 功能，AI 智能拆解用户工作流 。支持借模型驱动浏览器操作，流程全可视化，让知识获取与执行更自动化、透明化 。',
     icon: <MCPToolIcon />,
   },
   {
     title: '无限画布',
     subTitle: '可视化思维',
-    description: '在无限大可无限大本间的操解中，通过直观的方式组织和连接你的思法。',
+    description: '在无限大的工作空间中自由创作，用直观的方式组织和连接你的想法。',
     icon: <InfiniteCanvasIcon />,
   },
   {
     title: '智能标签',
-    subTitle: '自动化归类',
-    description: '多维度的标签资质 Dataview 渴装配，自动选择类型与知识成类。',
+    subTitle: '灵活组织',
+    description: '多维度标签支持 Dataview 式筛选，助项目管理与高效检索。',
     icon: <SmartTagIcon />,
   },
   {
     title: '富文本编辑',
-    subTitle: '双模块同作',
-    description: '富文本编辑器搭载 Markdown，同前提化的理过的提醒，让作品过更加阿！',
+    subTitle: '流畅创作',
+    description: '富文本编辑支持 Markdown，还能 diff 比对模型与原回答，让你灵活选内容！',
     icon: <RichTextEditorIcon />,
   },
   {
     title: '智能知识采集',
-    subTitle: 'AI资源采集',
-    description: '门降简创帮，主同新上／图点／文理等多光企类，突建，采集之八，影质。',
+    subTitle: 'AI预筛去重',
+    description:
+      '打破形态限制，支持网页 / 视频 / 音频等全形态知识，借插件 “一键剪藏”+AI 预筛去重，采集即入库，告别零散整理。',
     icon: <KnowledgeCollectionIcon />,
   },
   {
     title: 'AI驱动结构化',
-    subTitle: 'AI应配知识发安',
-    description: 'AI智动的突，通样动，类处和数到对分配线框，让明确量的完。',
+    subTitle: 'AI匹配知识关联',
+    description: 'AI 挖掘知识关联、串联碎片，输关键词自动构框架，让梳理更智能。',
     icon: <AIAssistantIcon />,
   },
   {
     title: '跨形态知识联动',
-    subTitle: '多形态智相',
-    description: '结合 / 跨域 / 语音等所合，多形态一个体，继续现想条受好知识管理。',
+    subTitle: '多形态管理',
+    description: '划词 / 视频帧 与思维导图节点关联绑定，实现多形态统一管理，精准定位全形态知识。',
     icon: <CrossModalIcon />,
   },
   {
     title: '自定义专属工具',
-    subTitle: '场景化智能交互',
-    description:
-      '划词关联知识库提问，AI 基于上下文深度解答；预设指令模板 + 自定义 Agent，适配科研、企业等多元场景需求。',
+    subTitle: '让AI更懂你的需求',
+    description: '无需编程就能构建专属工具、记忆 Prompt 并灵活调用，还能在工具市场分享共建生态。',
     icon: <PDFIntegrationIcon />,
   },
   {
     title: '知识引用沉淀',
-    subTitle: 'AI智能沉淀',
-    description: '基于大语言思知识库的智通式工，结合智能洞的的分析理动方式组活。',
+    subTitle: '让知识更系统',
+    description: '节点内容、模型回答片段及文献片段并自动生成格式，一键引用到记事本沉淀，形成个人知识库。',
     icon: <KnowledgeSedimentationIcon />,
   },
 ];
@@ -276,7 +279,7 @@ const Carousel = () => {
                   /* 形态2: 293x293 布局 */
                   <div className="flex h-full flex-col items-center justify-center space-y-4 p-6 text-center">
                     <div className="mb-2 scale-90">{item.icon}</div>
-                    <div className="-mt-10 flex w-full flex-col gap-2 pl-4 text-left">
+                    <div className="z-10 -mt-10 flex w-full flex-col gap-2 pl-4 text-left">
                       <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
                       <span className="text-sm font-semibold text-indigo-600">{item.subTitle}</span>
                     </div>
