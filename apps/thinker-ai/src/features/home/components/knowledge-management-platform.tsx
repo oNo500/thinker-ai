@@ -316,19 +316,27 @@ const Carousel = () => {
 const STEP_LIST = [
   {
     title: '知识采集',
-    description: '多形态采集，AI预筛去重',
+    description: '多形态内容，AI预筛去重',
   },
   {
     title: '知识处理',
-    description: '结构化节点，跨文档关联',
+    description: '结构化节点，智能关联',
+  },
+  {
+    title: '知识交互',
+    description: '划词问答，上下文解答',
   },
   {
     title: '知识沉淀',
-    description: '划词关联、AI问答',
+    description: '自动归档，标签管理',
   },
   {
-    title: '应用复利',
-    description: '个性化知识仓库',
+    title: '智能自动化',
+    description: 'Agent协同，省时高效',
+  },
+  {
+    title: '知识复利',
+    description: '越用越智能，知识变财富',
   },
 ];
 
@@ -345,7 +353,7 @@ const WorkflowStep = () => {
         <p className="py-[30px] text-center text-[20px]">从阅读到思考，从记录到创作，一站式完成所有知识工作</p>
         <div className="mt-[80px] flex w-full flex-row gap-3">
           {STEP_LIST.map((item, index) => (
-            <div key={index} className="flex w-1/4 flex-col gap-[25px]">
+            <div key={index} className="flex w-1/6 flex-col gap-[25px]">
               <div className="flex items-center">
                 <span className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#6E6BEE] text-[18px] font-semibold text-white">
                   {index + 1}
