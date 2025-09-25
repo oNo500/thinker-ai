@@ -224,6 +224,7 @@ const CoreFeatureExperience: React.FC = () => {
                     muted={true}
                     loop={true}
                     threshold={0.8}
+                    preloadOnMount={true}
                   />
                 </div>
               </div>

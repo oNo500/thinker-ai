@@ -21,6 +21,7 @@ interface VideoPlayerProps {
   playsInline?: boolean;
   threshold?: number; // 视口交叉阈值，默认0.5（50%可见时播放）
   showProgressBar?: boolean; // 是否显示进度条
+  preloadOnMount?: boolean; // 是否在组件挂载时就预加载视频
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -36,6 +37,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   playsInline = true,
   threshold = 0.5,
   showProgressBar = true,
+  preloadOnMount = true,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -55,6 +57,38 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+  // 预加载视频（在组件挂载时）
+  useEffect(() => {
+    if (!preloadOnMount) return;
+
+    // 创建隐藏的video元素来预加载
+    const preloadVideo = document.createElement('video');
+    preloadVideo.src = src;
+    preloadVideo.preload = 'auto';
+    preloadVideo.muted = true;
+    preloadVideo.style.display = 'none';
+
+    // 添加到DOM中开始预加载
+    document.body.appendChild(preloadVideo);
+
+    if (DEBUG) console.log('[VideoPlayer] Starting preload for:', src);
+
+    // 预加载完成后的处理
+    const handlePreloadComplete = () => {
+      if (DEBUG) console.log('[VideoPlayer] Preload completed for:', src);
+    };
+
+    preloadVideo.addEventListener('canplaythrough', handlePreloadComplete);
+
+    // 清理函数
+    return () => {
+      preloadVideo.removeEventListener('canplaythrough', handlePreloadComplete);
+      if (document.body.contains(preloadVideo)) {
+        document.body.removeChild(preloadVideo);
+      }
+    };
+  }, [src, preloadOnMount]);
 
   useEffect(() => {
     const container = containerRef.current;
