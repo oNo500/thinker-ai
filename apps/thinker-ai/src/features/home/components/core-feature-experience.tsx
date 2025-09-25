@@ -25,7 +25,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '无限画布',
       icon: <Icon5 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/wuxianhuabu.mp4',
+      video: '/无限画布.mp4',
       subTitle: ['无限空间，', '让你的思绪自由流动'],
       list: [
         '无限大的可视化工作空间，直观的拖拽和连线操作',
@@ -36,7 +36,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '跨形态知识联动',
       icon: <Icon6 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/huaciliandong.mp4',
+      video: '/划词联动.mp4',
       subTitle: ['划词生成节点，', '多载体精准绑定跳转'],
       list: [
         'PDF/ 文本 / 视频统一管理，覆盖全形态知识资产',
@@ -47,7 +47,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '多源引用问答',
       icon: <Icon1 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/duoyuanyinyong.mp4',
+      video: '/多源引用1.mp4',
       subTitle: ['跨文档引用问答，', '类 Cursor 式全库交互'],
       list: [
         '支持节点、文章、图片等多形态引用提问，打破形态限制，跨文档协同提问',
@@ -58,7 +58,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: 'Agent深度协同',
       icon: <Icon2 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/agent.mp4',
+      video: '/agent协同.mp4',
       subTitle: ['多模型接力，', '自主搭建专属Agent'],
       list: [
         '文本节点直连模型节点，自主搭建专属 Agent 流程',
@@ -69,7 +69,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '智能工作流系统',
       icon: <Icon3 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/mcp.mp4',
+      video: '/mcp一版过.mp4',
       subTitle: ['类Manus功能加持，', '自动化操作电脑更直观'],
       list: [
         '支持自主配置 MCP 能力，AI 智能拆解用户工作流',
@@ -80,7 +80,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: 'AI头脑风暴',
       icon: <Icon4 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/tounaofengbao.mp4',
+      video: '/头脑风暴.mp4',
       subTitle: ['基于当前节点+知识库，', 'AI智能拓展创意'],
       list: [
         '基于当前节点与整个知识库双维度，AI 智能拓展创意方向',
@@ -91,7 +91,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '自定义专属工具',
       icon: <Icon11 active={false} />, // 可以复用图标或添加新图标
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zidingyi.mp4',
+      video: '/自定义工具.mp4',
       subTitle: ['记忆Prompt+配置插件，', '让AI更懂你的需求'],
       list: [
         '轻松构建专属工具，无需编程技能，搭建轻量Agent',
@@ -102,7 +102,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '智能知识采集',
       icon: <Icon7 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishicaiji.mp4',
+      video: '/最新版采集.mp4',
       subTitle: ['AI预筛去重，', '让剪藏更自由高效'],
       list: [
         '插件 “一键剪藏” 全场景覆盖，搞定网页/片段/视频',
@@ -113,7 +113,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: 'AI知识关联',
       icon: <Icon8 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/AIxiangsi.mp4',
+      video: '/AI相似.mp4',
       subTitle: ['AI匹配相似片段，', '关联推荐知识一步到位'],
       list: [
         'AI 深度挖掘跨形态知识关联，串联碎片化内容',
@@ -124,7 +124,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: 'Diff智能比对',
       icon: <Icon9 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/diff.mp4',
+      video: '/diff.mp4',
       subTitle: ['AI 驱动内容对比整合，', '让创作更高效精准'],
       list: [
         '现代化编辑器支持 Markdown，专注内容创作流程',
@@ -135,7 +135,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '智能标签',
       icon: <Icon10 active={false} />,
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhinengbiaoqian.mp4',
+      video: '/智能标签.mp4',
       subTitle: ['双链笔记+标签，', '告别混乱，玩转知识组织'],
       list: [
         '多维度标签赋能，实现 Dataview 式筛选与总结',
@@ -146,7 +146,7 @@ const CoreFeatureExperience: React.FC = () => {
     {
       title: '知识沉淀归档',
       icon: <Icon12 active={false} />, // 可以复用图标或添加新图标
-      video: 'https://bowen-beijing.oss-cn-beijing.aliyuncs.com/public/zhishichendian.mp4',
+      video: '/cite.mp4',
       subTitle: ['一键附源归档，', '像 Reference 般清晰'],
       list: [
         '可直接 Cite 节点内容到记事本，保留完整引用链接',
